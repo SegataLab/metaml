@@ -9,11 +9,13 @@ def read_params(args):
 	arg = parser.add_argument
 	arg( 'inp_f', metavar='INPUT_FILE', nargs='?', default=sys.stdin, type=str, help="the input dataset file [stdin if not present]")
 	arg( 'out_f', metavar='OUTPUT_FILE', nargs='?', default=None, type=str, help="the output dataset file")
+
 	arg( '-z','--feature_identifier', type=str, default='k__', help="the feature identifier\n")
 	arg( '-s','--select', type=str, help="the samples to select\n")
 	arg( '-r','--remove', type=str, help="the samples to remove\n")
 	arg( '-i','--include', type=str, help="the fields to include\n")
 	arg( '-e','--exclude', type=str, help="the fields to exclude\n")
+
 	arg( '-t','--tout', action='store_true', help="transpose output dataset file\n")
 	return vars(parser.parse_args())
 

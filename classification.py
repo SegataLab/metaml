@@ -80,19 +80,25 @@ def read_params(args):
 	arg = parser.add_argument
 	arg( 'inp_f', metavar='INPUT_FILE', nargs='?', default=sys.stdin, type=str, help="the input dataset file [stdin if not present]")
 	arg( 'out_f', metavar='OUTPUT_FILE', nargs='?', default=None, type=str, help="the output file [stdout if not present]")
-	arg( '-e','--figure_extension', default='png', type=str, help="the extension of output figure\n")
+
 	arg( '-z','--feature_identifier', default='k__', type=str, help="the feature identifier\n")
+
 	arg( '-d','--define', type=str, help="define the classification problem\n")
 	arg( '-t','--target', type=str, help="define the target domain\n")
+	arg( '-u','--unique', type=str, help="the unique samples to select\n")
+	arg( '-b','--label_shuffling', action='store_true', help="label shuffling\n")
+
+	arg( '-r','--n_runs', default=200, type=int, help="the number of runs\n")
+	arg( '-p','--p_test', default=0.1, type=float, help="the dataset proportion to include in the test split\n")
+
 	arg( '-l','--learner_type', choices=['rf','svm'], help="the type of learner (classifier)\n")
 	arg( '-f','--cv_folds', type=int, help="the number of cross-validation folds\n")
 	arg( '-g','--cv_grid', type=str, help="the parameter grid for cross-validation\n")
 	arg( '-s','--cv_scoring', type=str, help="the scoring function for cross-validation\n")
-	arg( '-r','--n_runs', default=200, type=int, help="the number of runs\n")
-	arg( '-p','--p_test', default=0.1, type=float, help="the dataset proportion to include in the test split\n")
-	arg( '-u','--unique', type=str, help="the unique samples to select\n")
 	arg( '-n','--feature_number', type=str, help="the feature number\n")
-	arg( '-b','--label_shuffling', action='store_true', help="label shuffling\n")
+
+	arg( '-e','--figure_extension', default='png', type=str, help="the extension of output figure\n")
+	
 	return vars(parser.parse_args())
 
 def save_fi(fi):
