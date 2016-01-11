@@ -1,47 +1,55 @@
 #!/usr/bin/env python
 
-import sys
 import argparse as ap
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import sys
 from mpl_toolkits.mplot3d import Axes3D
+from scipy import interp
 from sklearn import decomposition
 from sklearn import metrics
 from sklearn import preprocessing as prep
-from sklearn.cross_validation import StratifiedKFold
 from sklearn.cross_validation import ShuffleSplit
+from sklearn.cross_validation import StratifiedKFold
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.grid_search import GridSearchCV
 from sklearn.svm import SVC
 
 class class_metrics:
-	accuracy_score = []
-	classification_report = []
-	confusion_matrix = []
-	roc_auc_score = []
-	roc_curve = []
+	def __init__(self):
+		self.accuracy = []
+		self.f1 = []
+		self.precision = []
+		self.recall = []
+		self.auc = []
+		self.roc_curve = []
+		self.confusion_matrix = []
 
 class class_params:
-	learner_type = []
-	cv_folds = []
-	cv_grid = []
-	cv_scoring = []
+	def __init__(self):
+		self.learner_type = []
+		self.cv_folds = []
+		self.cv_grid = []
+		self.cv_scoring = []
 
 class feature_importance:
-	feat = []
-	score_ab = []
-	score_im = []
+	def __init__(self):
+		self.feat = []
+		self.score = []
+		self.std = []
 
 def compute_feature_importance(clf, f, feat):
 	fi = feature_importance()
-	t = sum(s.feature_importances_ for s in clf)/len(clf)
-	fi.score_im = sorted(t, reverse=True)
+	t = [s.feature_importances_ for s in clf]
+	t2 = np.std(t, axis=0)
+	t = np.mean(t, axis=0)
+	fi.score = sorted(t, reverse=True)
 	t = sorted(range(len(t)), key=lambda s: t[s], reverse=True)
 	fi.feat = [feat[s] for s in t]
-	fi.score_ab = [sum(f[s]) for s in fi.feat]
+	fi.std = [t2[s] for s in t]
 	return fi
 
 def plot_classes(f, l, feat, nf):
@@ -65,79 +73,71 @@ def plot_classes(f, l, feat, nf):
 	ax.w_yaxis.set_ticklabels(['PC2 (' + str(np.round(100*pca.explained_variance_ratio_[1], decimals=2)) + '%)'])
 	ax.w_zaxis.set_ticklabels(['PC3 (' + str(np.round(100*pca.explained_variance_ratio_[2], decimals=2)) + '%)'])
 
-	fig.savefig(par['out_fig'], bbox_inches='tight')
+	fig.savefig(par['out_f'] + '_pca.' + par['figure_extension'], bbox_inches='tight')
 
 def read_params(args):
-	parser = ap.ArgumentParser(description='MicroMetaAnalysis')
+	parser = ap.ArgumentParser(description='MetAML - Metagenomic prediction Analysis based on Machine Learning')
 	arg = parser.add_argument
 	arg( 'inp_f', metavar='INPUT_FILE', nargs='?', default=sys.stdin, type=str, help="the input dataset file [stdin if not present]")
 	arg( 'out_f', metavar='OUTPUT_FILE', nargs='?', default=None, type=str, help="the output file [stdout if not present]")
-	arg( 'out_roc_f', metavar='OUTPUT_ROC_FILE', nargs='?', default=None, type=str, help="the output roc curve file")
-	arg( 'out_conf_f', metavar='OUTPUT_CONFUSION_FILE', nargs='?', default=None, type=str, help="the output confusion matrix file")
-	arg( 'out_fig', metavar='OUT_FIGURE', nargs='?', default=None, type=str, help="the output figure file")
-	arg( '-z','--feature_identifier', type=str, default='k__', help="the feature identifier\n")
+	arg( '-e','--figure_extension', default='png', type=str, help="the extension of output figure\n")
+	arg( '-z','--feature_identifier', default='k__', type=str, help="the feature identifier\n")
 	arg( '-d','--define', type=str, help="define the classification problem\n")
 	arg( '-t','--target', type=str, help="define the target domain\n")
-	arg( '-l','--learner_type', choices=['svm','rf'], help="the type of learner (classifier)\n")
-	arg( '-f','--cv_folds', type=int, help="number of cross-validation folds\n")
-	arg( '-g','--cv_grid', type=str, help="parameter grid for cross-validation\n")
-	arg( '-s','--cv_scoring', type=str, help="scoring function for cross-validation\n")
-	arg( '-r','--n_runs', default=200, type=int, help="number of runs\n")
-	arg( '-p','--p_test', default=0.1, type=float, help="dataset proportion to include in the test split\n")
-	arg( '-u','--unique', type=str, help="unique samples to select\n")
-	arg( '-n','--feature_number', type=str, help="feature number\n")
+	arg( '-l','--learner_type', choices=['rf','svm'], help="the type of learner (classifier)\n")
+	arg( '-f','--cv_folds', type=int, help="the number of cross-validation folds\n")
+	arg( '-g','--cv_grid', type=str, help="the parameter grid for cross-validation\n")
+	arg( '-s','--cv_scoring', type=str, help="the scoring function for cross-validation\n")
+	arg( '-r','--n_runs', default=200, type=int, help="the number of runs\n")
+	arg( '-p','--p_test', default=0.1, type=float, help="the dataset proportion to include in the test split\n")
+	arg( '-u','--unique', type=str, help="the unique samples to select\n")
+	arg( '-n','--feature_number', type=str, help="the feature number\n")
 	arg( '-b','--label_shuffling', action='store_true', help="label shuffling\n")
 	return vars(parser.parse_args())
 
 def save_fi(fi):
-	fidout.write('Feature importance and abundance\n')
+	fidout.write('Feature importance (ranking, name, average, std)\n')
 	for k in range(len(fi.feat)):
-		fidout.write(str(k) + '\t' + fi.feat[k] + '\t' + str(fi.score_im[k]) + '\t' + str(fi.score_ab[k]) + '\n')
+		fidout.write(str(k) + '\t' + fi.feat[k] + '\t' + str(fi.score[k]) + '\t' + str(fi.std[k]) + '\n')
 
 def save_results(l, l_es, p_es, i_tr, i_u, f):
+	n_runs = len(l_es)
 	cm = class_metrics()
-	n_ts = sum(sum([((i_tr[s]==False) & i_u[s]) for s in range(len(l_es))]))
-	l_ = pd.DataFrame([0]*n_ts)
-	l_es_ = pd.DataFrame([0]*n_ts)
-	p_es_ = pd.DataFrame(0, index=range(n_ts), columns=range(len(p_es[0].columns)))
-	c = -1
-	for j in range(len(l_es)):
-		h = l[-i_tr[j] & i_u[j]].index
-		for i in range(len(h)):
-			c = c+1
-			l_.loc[c] = l.loc[h[i]]
-			l_es_.loc[c] = l_es[j].loc[i]
-			p_es_.loc[c,:] = p_es[j].loc[i,:]
 
-	l_ = l_.values.flatten().astype('int')
-	l_es_ = l_es_.values.flatten().astype('int')
-	p_es_pos = p_es_.loc[:,1].values
+	for j in range(n_runs):
+		l_ = pd.DataFrame([l.loc[i] for i in l[-i_tr[j] & i_u[j]].index]).values.flatten().astype('int')
+		l_es_ = l_es[j].values.flatten().astype('int')
+		p_es_pos_ = p_es[j].loc[:,1].values
 
-	cm.accuracy_score = metrics.accuracy_score(l_, l_es_)
-	cm.classification_report = metrics.classification_report(l_, l_es_)
-	cm.confusion_matrix = metrics.confusion_matrix(l_, l_es_)
-	if max(l_)==1:
-		cm.roc_auc_score = metrics.roc_auc_score(l_, p_es_pos)
-		cm.roc_curve = metrics.roc_curve(l_, p_es_pos)
+		cm.accuracy.append(metrics.accuracy_score(l_, l_es_))
+		cm.f1.append(metrics.f1_score(l_, l_es_, pos_label=None, average='weighted'))
+		cm.precision.append(metrics.precision_score(l_, l_es_, pos_label=None, average='weighted'))
+		cm.recall.append(metrics.recall_score(l_, l_es_, pos_label=None, average='weighted'))
+		if max(l_)==1:
+			cm.auc.append(metrics.roc_auc_score(l_, p_es_pos_))
+			cm.roc_curve.append(metrics.roc_curve(l_, p_es_pos_))
+		cm.confusion_matrix.append(metrics.confusion_matrix(l_, l_es_))
 
 	fidout.write('#samples\t' + str(sum(sum(i_u))/len(i_u)))
 	fidout.write('\n#features\t' + str(len(f.iloc[0,:])))
-	fidout.write('\naccuracy_score\t' + str(cm.accuracy_score))
-	fidout.write('\n' + cm.classification_report)
-	fidout.write('\nroc_auc_score\t' + str(cm.roc_auc_score) + '\n')
+	fidout.write('\n#runs\t' + str(len(l_es)))
 
-	if par['out_roc_f']:
-		fidoutroc.write('#features\t' + str(len(f.iloc[0,:])) + '\n')
-		for i in range(len(cm.roc_curve)):
-			for j in range(len(cm.roc_curve[i])):
-				fidoutroc.write(str(cm.roc_curve[i][j]) + '\t')
+	fidout.write('\naccuracy\t' + str(np.mean(cm.accuracy)) + '\t' + str(np.std(cm.accuracy)))
+	fidout.write('\nf1\t' + str(np.mean(cm.f1)) + '\t' + str(np.std(cm.f1)) + ')')
+	fidout.write('\nprecision\t' + str(np.mean(cm.precision)) + '\t' + str(np.std(cm.precision)))
+	fidout.write('\nrecall\t' + str(np.mean(cm.recall)) + '\t' + str(np.std(cm.recall)))
+	fidout.write('\nauc\t' + str(np.mean(cm.auc)) + '\t' + str(np.std(cm.auc)))
+	fidout.write('\nconfusion matrix')
+	for i in range(len(cm.confusion_matrix[0])):
+		for i2 in range(len(cm.confusion_matrix[0][i])):
+			fidout.write('\t' + str(np.sum([cm.confusion_matrix[j][i][i2] for j in range(n_runs)])))
+		fidout.write('\n')
+	fidoutroc.write('#features\t' + str(len(f.iloc[0,:])) + '\n')		
+	for j in range(n_runs):
+		for i in range(len(cm.roc_curve[j])):
+			for i2 in range(len(cm.roc_curve[j][i])):
+				fidoutroc.write(str(cm.roc_curve[j][i][i2]) + '\t')
 			fidoutroc.write('\n')
-	if par['out_conf_f']:
-		fidoutconf.write('#features\t' + str(len(f.iloc[0,:])) + '\n')
-		for i in range(len(cm.confusion_matrix)):
-			for j in range(len(cm.confusion_matrix[i])):
-				fidoutconf.write(str(cm.confusion_matrix[i][j]) + '\t')
-			fidoutconf.write('\n')	
 
 	return cm
 
@@ -147,7 +147,7 @@ def set_class_params(args):
 	if par['learner_type']:
 		lp.learner_type = par['learner_type']
 	else:
-		lp.learner_type = 'svm'
+		lp.learner_type = 'rf'
 
 	if par['cv_folds']:
 		lp.cv_folds = int(par['cv_folds'])
@@ -177,13 +177,10 @@ if __name__ == "__main__":
 	f = f.T
 
 	if par['out_f']:
-		fidout = open(par['out_f'],'w')
+		fidout = open(par['out_f'] + '.txt','w')
+		fidoutroc = open(par['out_f'] + '_roccurve.txt','w')
 	else:
 		fidout = sys.stdout
-	if par['out_roc_f']:
-		fidoutroc = open(par['out_roc_f'],'w')
-	if par['out_conf_f']:
-		fidoutconf = open(par['out_conf_f'],'w')
 
 	if par['unique']:
 		pf = pd.DataFrame([s.split(':') for s in par['unique'].split(',')])
@@ -248,14 +245,14 @@ if __name__ == "__main__":
 			clf.append(GridSearchCV(SVC(C=1, probability=True), lp.cv_grid, cv=StratifiedKFold(l.iloc[i_tr[j] & i_u[j],0], lp.cv_folds), scoring=lp.cv_scoring).fit(f[i_tr[j] & i_u[j]].values, l[i_tr[j] & i_u[j]].values.flatten().astype('int')))
 			p_es.append(pd.DataFrame(clf[-1].predict_proba(f[-i_tr[j] & i_u[j]].values)))
 		if lp.learner_type=='rf':
-			clf.append(RandomForestClassifier(n_estimators=50, max_depth=None, min_samples_split=1, random_state=0).fit(f[i_tr[j] & i_u[j]].values, l[i_tr[j] & i_u[j]].values.flatten().astype('int')))
+			clf.append(RandomForestClassifier(n_estimators=500, max_depth=None, min_samples_split=1, random_state=0).fit(f[i_tr[j] & i_u[j]].values, l[i_tr[j] & i_u[j]].values.flatten().astype('int')))
 			p_es.append(pd.DataFrame(clf[-1].predict_proba(f[-i_tr[j] & i_u[j]].values)))
 		l_es.append(pd.DataFrame([list(p_es[j].iloc[i,:]).index(max(p_es[j].iloc[i,:])) for i in range(len(p_es[j]))]))
 	cm = save_results(l, l_es, p_es, i_tr, i_u, f)
 
 	if lp.learner_type=='rf':
 		fi_ave = compute_feature_importance(clf, f, feat)
-		fidout.write('The correlation between feature abundance and importance is ' + str(np.corrcoef(fi_ave.score_ab, fi_ave.score_im)[0,1]) + '\n\n')
+		fidout.write('\n')
 		if par['feature_number']:
 			fi = []
 			for k in nf:
@@ -265,18 +262,15 @@ if __name__ == "__main__":
 				for j in range(n_runs):
 					if k==nf[0]:
 						fi.append(compute_feature_importance(clf[j], f, feat))
-					clf_f.append(RandomForestClassifier(n_estimators=50, max_depth=None, min_samples_split=1, random_state=0).fit(f.loc[i_tr[j] & i_u[j], fi[j].feat[:k]].values, l[i_tr[j] & i_u[j]].values.flatten().astype('int')))
+					clf_f.append(RandomForestClassifier(n_estimators=500, max_depth=None, min_samples_split=1, random_state=0).fit(f.loc[i_tr[j] & i_u[j], fi[j].feat[:k]].values, l[i_tr[j] & i_u[j]].values.flatten().astype('int')))
 					p_es_f.append(pd.DataFrame(clf_f[j].predict_proba(f.loc[-i_tr[j] & i_u[j],fi[j].feat[:k]].values)))
 					l_es_f.append(pd.DataFrame([list(p_es_f[j].iloc[i,:]).index(max(p_es_f[j].iloc[i,:])) for i in range(len(p_es_f[j]))]))
 				cm_f = save_results(l, l_es_f, p_es_f, i_tr, i_u, f.loc[:,fi_ave.feat[:k]])
-				fidout.write('The correlation between feature abundance and importance is ' + str(np.corrcoef(fi_ave.score_ab[:k], fi_ave.score_im[:k])[0,1]) + '\n\n')
-		if par['out_fig']:
+				fidout.write('\n')
+		if par['out_f']:
 			plot_classes(f, l, fi_ave.feat, nf[-1])
 		save_fi(fi_ave)
 
 	if par['out_f']:
 		fidout.close()
-	if par['out_roc_f']:
 		fidoutroc.close()
-	if par['out_conf_f']:
-		fidoutconf.close()
