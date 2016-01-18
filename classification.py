@@ -49,7 +49,7 @@ def compute_feature_importance(el, feat, feat_sel, ltype):
 	elif (ltype == 'lasso') | (ltype == 'enet'):
 		t = abs(el.coef_)/sum(abs(el.coef_))
 	else:
-		t = el.imp
+		t = [1.0/len(feat_sel)]*len(feat_sel)
 	ti = [feat.index(s) for s in feat_sel]
 	fi.imp[ti] = t
 
@@ -122,9 +122,14 @@ def save_average_feature_importance(fi, feat):
 
 def save_results(l, l_es, p_es, i_tr, i_u, nf):
 	n_runs = len(l_es)
+	n_clts = len(np.unique(l))
 	cm = class_metrics()
 
-	fidoutes.write('#features\t' + str(nf) + '\n')
+	if par['out_f']:
+		fidoutes.write('#features\t' + str(nf) + '\n')
+		if n_clts == 2:
+			fidoutroc.write('#features\t' + str(nf) + '\n')	
+
 	for j in range(n_runs):
 		l_ = pd.DataFrame([l.loc[i] for i in l[-i_tr[j] & i_u[j]].index]).values.flatten().astype('int')
 		l_es_ = l_es[j].values.flatten().astype('int')
@@ -137,20 +142,27 @@ def save_results(l, l_es, p_es, i_tr, i_u, nf):
 		cm.f1.append(metrics.f1_score(l_, l_es_, pos_label=None, average='weighted'))
 		cm.precision.append(metrics.precision_score(l_, l_es_, pos_label=None, average='weighted'))
 		cm.recall.append(metrics.recall_score(l_, l_es_, pos_label=None, average='weighted'))
-		if max(l_)==1:
-			cm.auc.append(metrics.roc_auc_score(l_, p_es_pos_))
-			cm.roc_curve.append(metrics.roc_curve(l_, p_es_pos_))
-		cm.confusion_matrix.append(metrics.confusion_matrix(l_, l_es_))
+		if len(np.unique(l_)) == n_clts:
+			if n_clts == 2:
+				cm.auc.append(metrics.roc_auc_score(l_, p_es_pos_))
+				cm.roc_curve.append(metrics.roc_curve(l_, p_es_pos_))
+				fidoutroc.write('run ' + str(j) + '\n')
+				for i in range(len(cm.roc_curve[-1])):
+					for i2 in range(len(cm.roc_curve[-1][i])):
+						fidoutroc.write(str(cm.roc_curve[-1][i][i2]) + '\t')
+					fidoutroc.write('\n')
+			cm.confusion_matrix.append(metrics.confusion_matrix(l_, l_es_))
 
-		fidoutes.write('run ' + str(j))
-		fidoutes.write('\ntrue labels\t')
-		[fidoutes.write(str(i)+'\t') for i in l_]
-		fidoutes.write('\nestimated labels\t')
-		[fidoutes.write(str(i)+'\t') for i in l_es_]
-		if max(l_)==1:
-			fidoutes.write('\nestimated probabilities\t')
-			[fidoutes.write(str(i)+'\t') for i in p_es_pos_]
-		fidoutes.write('\n')
+		if par['out_f']:
+			fidoutes.write('run ' + str(j))
+			fidoutes.write('\ntrue labels\t')
+			[fidoutes.write(str(i)+'\t') for i in l_]
+			fidoutes.write('\nestimated labels\t')
+			[fidoutes.write(str(i)+'\t') for i in l_es_]
+			if n_clts <= 2:
+				fidoutes.write('\nestimated probabilities\t')
+				[fidoutes.write(str(i)+'\t') for i in p_es_pos_]
+			fidoutes.write('\n')
 
 	fidout.write('#samples\t' + str(sum(sum(i_u))/len(i_u)))
 	fidout.write('\n#features\t' + str(nf))
@@ -160,19 +172,15 @@ def save_results(l, l_es, p_es, i_tr, i_u, nf):
 	fidout.write('\nf1\t' + str(np.mean(cm.f1)) + '\t' + str(np.std(cm.f1)))
 	fidout.write('\nprecision\t' + str(np.mean(cm.precision)) + '\t' + str(np.std(cm.precision)))
 	fidout.write('\nrecall\t' + str(np.mean(cm.recall)) + '\t' + str(np.std(cm.recall)))
-	fidout.write('\nauc\t' + str(np.mean(cm.auc)) + '\t' + str(np.std(cm.auc)))
+	if n_clts == 2:
+		fidout.write('\nauc\t' + str(np.mean(cm.auc)) + '\t' + str(np.std(cm.auc)))
+	else:
+		fidout.write('\nauc\t[]\t[]')
 	fidout.write('\nconfusion matrix')
 	for i in range(len(cm.confusion_matrix[0])):
 		for i2 in range(len(cm.confusion_matrix[0][i])):
-			fidout.write('\t' + str(np.sum([cm.confusion_matrix[j][i][i2] for j in range(n_runs)])))
+			fidout.write('\t' + str(np.sum([cm.confusion_matrix[j][i][i2] for j in range(len(cm.confusion_matrix))])))
 		fidout.write('\n')
-
-	fidoutroc.write('#features\t' + str(len(f.iloc[0,:])) + '\n')		
-	for j in range(n_runs):
-		for i in range(len(cm.roc_curve[j])):
-			for i2 in range(len(cm.roc_curve[j][i])):
-				fidoutroc.write(str(cm.roc_curve[j][i][i2]) + '\t')
-			fidoutroc.write('\n')
 
 	return cm
 
@@ -233,8 +241,8 @@ if __name__ == "__main__":
 
 	if par['out_f']:
 		fidout = open(par['out_f'] + '.txt','w')
-		fidoutroc = open(par['out_f'] + '_roccurve.txt','w')
 		fidoutes = open(par['out_f'] + '_estimations.txt','w')
+		fidoutroc = open(par['out_f'] + '_roccurve.txt','w')
 	else:
 		fidout = sys.stdout
 
@@ -336,5 +344,5 @@ if __name__ == "__main__":
 		plot_pca(f, l, fi_ave.feat_sel)
 
 		fidout.close()
-		fidoutroc.close()
 		fidoutes.close()
+		fidoutroc.close()
