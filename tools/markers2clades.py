@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
-import os
-import sys
 import argparse as ap
+import os
 import pandas as pd
+import sys
 from scipy.stats import mode
 
 def read_params(args):

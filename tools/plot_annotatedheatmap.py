@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 
-import sys
 import argparse as ap
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import sys
 
 class plot_par:
 	aspect_ratio = 'auto'
