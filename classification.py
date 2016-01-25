@@ -262,9 +262,6 @@ if __name__ == "__main__":
 		le.fit(f.iloc[:,0])
 		l = pd.DataFrame(le.transform(f.iloc[:,0]))
 
-	if par['label_shuffling']:
-		np.random.shuffle(l.values)
-
 	runs_n = par['runs_n']
 	if par ['target']:
 		runs_cv_folds = 1
@@ -301,6 +298,9 @@ if __name__ == "__main__":
  					i_tr[j*runs_cv_folds+i][ii_u[s]] = False
 	i_tr = i_tr.values.T
 	i_u = i_u.values.T
+
+	if par['label_shuffling']:
+		np.random.shuffle(l.values)
 
 	feat = [s for s in f.columns if sum([s2 in s for s2 in par['feature_identifier'].split(':')])>0]
 	if 'unclassified' in f.columns: feat.append('unclassified')
