@@ -151,7 +151,7 @@ def save_results(l, l_es, p_es, i_tr, i_u, nf, runs_n, runs_cv_folds):
 					for i2 in range(len(cm.roc_curve[-1][i])):
 						fidoutroc.write(str(cm.roc_curve[-1][i][i2]) + '\t')
 					fidoutroc.write('\n')
-			cm.confusion_matrix.append(metrics.confusion_matrix(l_, l_es_, labels=np.unique(l)))
+			cm.confusion_matrix.append(metrics.confusion_matrix(l_, l_es_, labels=np.unique(l.astype('int'))))
 
 		if par['out_f']:
 			fidoutes.write('run/fold\t' + str(j/runs_cv_folds) + '/' + str(j%runs_cv_folds))

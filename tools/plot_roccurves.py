@@ -1,21 +1,27 @@
 #!/usr/bin/env python
 
 import argparse as ap
+import itertools
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import numpy as np
 import sys
+from scipy import interpolate
+from sklearn import metrics
 
 class plot_par:
-	dataset_name_prefix = ['ab_Quin_gut_liver_cirrhosis__d-disease__','ab_Zeller_fecal_colorectal_cancer--group__d-disease__','ab_metahit__d-disease__','ab_Chatelier_gut_obesity__d-disease__','ab_t2dmeta_long-t2dmeta_short__d-disease__','ab_WT2D__d-disease__']
-	dataset_name_prefix_title = ['Cirrhosis','Colorectal','Metahit','Obesity','T2D','WT2D']
-	dataset_name_suffix = [['l-svm_roc.txt','l-svm__b_roc.txt'],['l-rf_roc.txt','l-rf__b_roc.txt']]
+	dataset_name_prefix = ['abundance_cirrhosis__d-disease__','abundance_colorectal--group__d-disease__','abundance_ibd__d-disease__','abundance_obesity__d-disease__','abundance_t2d_long-t2d_short__d-disease__','abundance_WT2D__d-disease__']
+	dataset_name_prefix_title = ['Cirrhosis','Colorectal','IBD','Obesity','T2D','WT2D']
+	dataset_name_suffix = [['l-rf_estimations.txt','l-rf__b_estimations.txt'],['l-svm_estimations.txt','l-svm__b_estimations.txt']]
+	factor = 2.26
 	fig_size = [4, 8]
+	plot_alpha = 0.2
 	plot_color = ['b','g','r','c','m','orange']
 	plot_ls = ['-','--']
 	plot_lw = 2
 	plot_marker = ['None','None']
-	plot_title = [[0.5,0.1,'SVM'],[0.5,0.1,'RF']]
+	plot_title = [[0.5,0.1,'RF'],[0.5,0.1,'SVM']]
 	text_size = 10
 	title = 'ROC curves'
 	x_label = 'False positive rate'
@@ -26,6 +32,7 @@ def read_params(args):
 	arg = parser.add_argument
 	arg( 'path', metavar='PATH', nargs='?', default=None, type=str, help="the path")
 	arg( 'out_fig', metavar='OUT_FIGURE', nargs='?', default=None, type=str, help="the output figure file")
+	arg( '-p','--runs_cv_folds', default=10, type=int, help="the number of cross-validation folds per run\n")
 	return vars(parser.parse_args())
 
 if __name__ == "__main__":
@@ -38,10 +45,20 @@ if __name__ == "__main__":
 	for k in range(nplots):
 		for i in range(len(plot_par.dataset_name_prefix)):
 			for j in range(len(plot_par.dataset_name_suffix[k])):
-				inp_f = open(par['path'] + plot_par.dataset_name_prefix[i] + plot_par.dataset_name_suffix[k][j],'r')
-				f = [s.split('\t')[:-1] for s in inp_f.read().split('\n')[1:-1]]
-				ax[k].plot(f[0], f[1], color=plot_par.plot_color[i], ls=plot_par.plot_ls[j], lw=plot_par.plot_lw, marker=plot_par.plot_marker[j])
-				inp_f.close()
+				f = open(par['path'] + plot_par.dataset_name_prefix[i] + plot_par.dataset_name_suffix[k][j],'r').read().split("#features")[1]
+				l_ = [map(int,t.split('\n')[0].split('\t')[1:-1]) for t in f.split('true labels')[1:]]
+				p_es_pos_ = [map(float,t.split('\n')[0].split('\t')[1:-1]) for t in f.split('estimated probabilities')[1:]]
+
+				fpr_all, tpr_all, thresholds_all = metrics.roc_curve(list(itertools.chain(*l_)), list(itertools.chain(*p_es_pos_)))
+
+				tpr_i = []
+				for s in range(len(l_)):
+					fpr, tpr, thresholds = metrics.roc_curve(l_[s], p_es_pos_[s])
+					if not np.isnan(tpr[0]):
+						tpr_i.append(interpolate.interp1d(fpr, tpr, 'nearest')(fpr_all))
+
+				ax[k].fill_between(fpr_all, tpr_all-np.std(tpr_i, axis=0)*plot_par.factor/np.sqrt(par['runs_cv_folds']), tpr_all+np.std(tpr_i, axis=0)*plot_par.factor/np.sqrt(par['runs_cv_folds']), color=plot_par.plot_color[i], lw=0, alpha=plot_par.plot_alpha)
+				ax[k].plot(fpr_all, tpr_all, color=plot_par.plot_color[i], ls=plot_par.plot_ls[j], lw=plot_par.plot_lw, marker=plot_par.plot_marker[j])
 
 	fig.subplots_adjust(hspace=0)
 	ax[-1].set_xlabel(plot_par.x_label, size=plot_par.text_size)
@@ -50,11 +67,13 @@ if __name__ == "__main__":
 		ax[k].set_ylabel(plot_par.y_label, size=plot_par.text_size)
 		ax[k].tick_params(labelsize=plot_par.text_size, axis='y')
 		ax[k].text(plot_par.plot_title[k][0], plot_par.plot_title[k][1], plot_par.plot_title[k][2], va='center', ha='center', size=plot_par.text_size+2)
+		ax[k].set_xlim([0.0, 1.0])
+		ax[k].set_ylim([0.0, 1.0])
 	ax[-1].set_yticklabels(ax[-1].get_yticks()[:-1])
 	ax[0].set_title(plot_par.title, size=plot_par.text_size+2)
 
 	leg_col = [plt.Rectangle((0, 0), 1, 1, fc=s, linewidth=0) for s in plot_par.plot_color] + [plt.Line2D([0,1], [0,1], c='k', ls='-', lw=2)] + [plt.Line2D([0,1], [0,1], c='k', ls='--', lw=2)]
-	leg_l = [s for s in plot_par.dataset_name_prefix_title] + ['True labels'] + ['Random labels']
+	leg_l = [s for s in plot_par.dataset_name_prefix_title] + ['True labels'] + ['Shuffled labels']
 	leg = ax[-1].legend(leg_col, leg_l, prop={'size':plot_par.text_size}, loc='center left', bbox_to_anchor=(1.02,1), numpoints=1)
 	leg.get_frame().set_alpha(0)
 

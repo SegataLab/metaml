@@ -12,7 +12,8 @@ from scipy.stats import mode
 class plot_par:
 	bar_color = ['royalblue','green','crimson']
 	bar_edgecolor = 'none'
-	bar_width = 0.6
+	bar_stacked = 'no'
+	bar_width = 0.48
 	cmap_color = 'jet'
 	feature_identifier = ['k__','GeneID:gi|']
 	feature_number = [25, 25]
@@ -23,6 +24,7 @@ class plot_par:
 	text_style = 'italic'
 	x_label_s = ['Relative importance (in blue) [%]', 'Relative importance [%]']
 	x_label_a = ['Healthy (in green) and diseased (in red)\n average relative abundance [%]', 'Healthy (in green) and diseased (in red)\n average presence [%]']
+	y_label = ['Markers', 12]
 	xticks_n = 5
 
 def read_params(args):
@@ -54,7 +56,7 @@ if __name__ == "__main__":
 
 	for inp_ft in range(nplots):
 		inp_f = open(par['inp_f'].split(':')[inp_ft],'r')
-		f = [s.split('\t') for s in ((inp_f.read()).split('Feature importance and abundance')[-1]).split('\n')[1:-1]]
+		f = [s.split('\t') for s in ((inp_f.read()).split('Feature importance (ranking, name, average, std)')[-1]).split('\n')[1:-1]]
 		inp_f.close()
 
 		fdata = pd.read_csv(par['inp_data_f'].split(':')[inp_ft], sep='\t', header=None, index_col=0, dtype=unicode).T
@@ -70,6 +72,7 @@ if __name__ == "__main__":
 		f_ind = np.arange(plot_par.feature_number[inp_ft])
 		f_text = [f[s][1] for s in range(plot_par.feature_number[inp_ft])]
 		f_s = [100*float(f[s][2]) for s in range(plot_par.feature_number[inp_ft])]
+		f_ssd = [100*float(f[s][3]) for s in range(plot_par.feature_number[inp_ft])]		
 		if par['scores'] == False:
 			f_a = []
 			for t in np.unique(l):
@@ -108,13 +111,17 @@ if __name__ == "__main__":
 		if plot_par.feature_type[inp_ft]==1:
 			cmap = plt.get_cmap(plot_par.cmap_color)
 			for s in range(plot_par.feature_number[inp_ft]):
-				ax[inp_ft].barh(f_ind[s], f_s[s], plot_par.bar_width, color=cmap(f_text_sl[s]), edgecolor=plot_par.bar_edgecolor)
+				ax[inp_ft].barh(f_ind[s], f_s[s], xerr=[[0], [f_ssd[s]]], height=plot_par.bar_width, color=cmap(f_text_sl[s]), ecolor=cmap(f_text_sl[s]), edgecolor=plot_par.bar_edgecolor)
 		else:
-			ax[inp_ft].barh(f_ind, f_s, plot_par.bar_width, color=plot_par.bar_color[0], edgecolor=plot_par.bar_edgecolor)
+			ax[inp_ft].barh(f_ind, f_s, xerr=[[0]*len(f_ssd), f_ssd], height=plot_par.bar_width, color=plot_par.bar_color[0], ecolor=plot_par.bar_color[0], edgecolor=plot_par.bar_edgecolor)
 		if par['scores'] == False:
 			for s in range(plot_par.feature_number[inp_ft]):
-				for t in np.argsort([-f_a[t][s] for t in range(len(f_a))]):
-					ax2[inp_ft].barh(f_ind[s]+plot_par.bar_width, f_a[t][s], plot_par.bar_width/2, color=plot_par.bar_color[t+1], edgecolor=plot_par.bar_edgecolor)
+				if plot_par.bar_stacked == 'yes':
+					for t in np.argsort([-f_a[t][s] for t in range(len(f_a))]):
+						ax2[inp_ft].barh(f_ind[s]+plot_par.bar_width, f_a[t][s], height=plot_par.bar_width/2, color=plot_par.bar_color[t+1], edgecolor=plot_par.bar_edgecolor)
+				else:
+					for t in range(len(f_a)):
+						ax2[inp_ft].barh(f_ind[s]+plot_par.bar_width*(1+float(t)/len(f_a)), f_a[t][s], height=plot_par.bar_width/len(f_a), color=plot_par.bar_color[t+1], edgecolor=plot_par.bar_edgecolor)					
 
 		if plot_par.feature_type[inp_ft]==1:
 			ax[inp_ft].get_yaxis().set_visible(False)
@@ -150,8 +157,10 @@ if __name__ == "__main__":
 			leg = plt.legend(leg_col, leg_l, prop={'size':plot_par.text_size, 'style':plot_par.text_style}, loc='center left', bbox_to_anchor=(1.02,0.5))
 			leg.get_frame().set_alpha(0)
 
-		ax[inp_ft].invert_yaxis()
+			ax[inp_ft].text(-0.02, plot_par.feature_number[inp_ft]/2, plot_par.y_label[0], horizontalalignment='center', verticalalignment='center', rotation=90, fontsize=plot_par.y_label[1])
 
+		ax[inp_ft].invert_yaxis()
+		ax2[inp_ft].set_xscale('log')
 	
 	fig.subplots_adjust(wspace=0.15)
 	fig.suptitle(par['title'], size=plot_par.text_size+2, y=1)

@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 
 import argparse as ap
+import itertools
 import numpy as np
 import sys
 import scipy.stats as stats
 from sklearn import metrics
 
 def read_params(args):
-	parser = ap.ArgumentParser(description='Compute statistical test on predicted labels')
+	parser = ap.ArgumentParser(description='Compute statistical test on predicted labels for binary classification problems')
 	arg = parser.add_argument
 	arg( 'inp_f', metavar='INPUT_FILE', nargs='?', default=None, type=str, help="the input file")
 	arg( 'inp_f2', metavar='INPUT_FILE2', nargs='?', default=None, type=str, help="the input file2")
@@ -43,26 +44,34 @@ if __name__ == "__main__":
 	#compute metrics for each run/fold
 	p = par['runs_cv_folds']
 	r = len(l_[0])/p
-	pr_r = range(p*r)
+	i = []
+	ii = []
+	c = 0
+	for j in range(r):
+		i.append([j*p+j2 for j2 in range(p) if (len(np.unique(l_[0][j*p+j2]))==2) & (len(np.unique(l2_[0][j*p+j2]))==2)])
+		ii.append([j2+c for j2 in range(len(i[-1]))])
+		c = c + len(i[-1])
+	pr_i = list(itertools.chain(*i))
+	pr_ii = list(itertools.chain(*ii))
 	
-	f_accuracy = [[metrics.accuracy_score(l_[s][j], l_es_[s][j]) for j in pr_r] for s in fn_r]
-	f_f1 = [[metrics.f1_score(l_[s][j], l_es_[s][j], pos_label=None, average='weighted') for j in pr_r] for s in fn_r]
-	f_precision = [[metrics.precision_score(l_[s][j], l_es_[s][j], pos_label=None, average='weighted') for j in pr_r] for s in fn_r]
-	f_recall = [[metrics.recall_score(l_[s][j], l_es_[s][j], pos_label=None, average='weighted') for j in pr_r] for s in fn_r]
-	f_auc = [[metrics.roc_auc_score(l_[s][j], p_es_pos_[s][j]) for j in pr_r] for s in fn_r]
+	f_accuracy = [[metrics.accuracy_score(l_[s][j], l_es_[s][j]) for j in pr_i] for s in fn_r]
+	f_f1 = [[metrics.f1_score(l_[s][j], l_es_[s][j], pos_label=None, average='weighted') for j in pr_i] for s in fn_r]
+	f_precision = [[metrics.precision_score(l_[s][j], l_es_[s][j], pos_label=None, average='weighted') for j in pr_i] for s in fn_r]
+	f_recall = [[metrics.recall_score(l_[s][j], l_es_[s][j], pos_label=None, average='weighted') for j in pr_i] for s in fn_r]
+	f_auc = [[metrics.roc_auc_score(l_[s][j], p_es_pos_[s][j]) for j in pr_i] for s in fn_r]
 
-	f2_accuracy = [[metrics.accuracy_score(l2_[s][j], l2_es_[s][j]) for j in pr_r] for s in f2n_r]
-	f2_f1 = [[metrics.f1_score(l2_[s][j], l2_es_[s][j], pos_label=None, average='weighted') for j in pr_r] for s in f2n_r]
-	f2_precision = [[metrics.precision_score(l2_[s][j], l2_es_[s][j], pos_label=None, average='weighted') for j in pr_r] for s in f2n_r]
-	f2_recall = [[metrics.recall_score(l2_[s][j], l2_es_[s][j], pos_label=None, average='weighted') for j in pr_r] for s in f2n_r]
-	f2_auc = [[metrics.roc_auc_score(l2_[s][j], p2_es_pos_[s][j]) for j in pr_r] for s in f2n_r]
+	f2_accuracy = [[metrics.accuracy_score(l2_[s][j], l2_es_[s][j]) for j in pr_i] for s in f2n_r]
+	f2_f1 = [[metrics.f1_score(l2_[s][j], l2_es_[s][j], pos_label=None, average='weighted') for j in pr_i] for s in f2n_r]
+	f2_precision = [[metrics.precision_score(l2_[s][j], l2_es_[s][j], pos_label=None, average='weighted') for j in pr_i] for s in f2n_r]
+	f2_recall = [[metrics.recall_score(l2_[s][j], l2_es_[s][j], pos_label=None, average='weighted') for j in pr_i] for s in f2n_r]
+	f2_auc = [[metrics.roc_auc_score(l2_[s][j], p2_es_pos_[s][j]) for j in pr_i] for s in f2n_r]
 
 	#compute statistical test
-	t_accuracy = [[stats.t.sf(np.mean([f_accuracy[s][j]-f2_accuracy[s2][j] for j in pr_r])/np.mean([np.std([f_accuracy[s][j*p+j2]-f2_accuracy[s2][j*p+j2] for j2 in range(p)])/np.sqrt(p) for j in range(r)]),9) for s2 in f2n_r] for s in fn_r]
-	t_f1 = [[stats.t.sf(np.mean([f_f1[s][j]-f2_f1[s2][j] for j in pr_r])/np.mean([np.std([f_f1[s][j*p+j2]-f2_f1[s2][j*p+j2] for j2 in range(p)])/np.sqrt(p) for j in range(r)]),9) for s2 in f2n_r] for s in fn_r]
-	t_precision = [[stats.t.sf(np.mean([f_precision[s][j]-f2_precision[s2][j] for j in pr_r])/np.mean([np.std([f_precision[s][j*p+j2]-f2_precision[s2][j*p+j2] for j2 in range(p)])/np.sqrt(p) for j in range(r)]),9) for s2 in f2n_r] for s in fn_r]
-	t_recall = [[stats.t.sf(np.mean([f_recall[s][j]-f2_recall[s2][j] for j in pr_r])/np.mean([np.std([f_recall[s][j*p+j2]-f2_recall[s2][j*p+j2] for j2 in range(p)])/np.sqrt(p) for j in range(r)]),9) for s2 in f2n_r] for s in fn_r]
-	t_auc = [[stats.t.sf(np.mean([f_auc[s][j]-f2_auc[s2][j] for j in pr_r])/np.mean([np.std([f_auc[s][j*p+j2]-f2_auc[s2][j*p+j2] for j2 in range(p)])/np.sqrt(p) for j in range(r)]),9) for s2 in f2n_r] for s in fn_r]
+	t_accuracy = [[2*stats.t.sf(np.abs(np.mean([f_accuracy[s][j]-f2_accuracy[s2][j] for j in pr_ii]))/np.mean([np.std([f_accuracy[s][j2]-f2_accuracy[s2][j2] for j2 in ii[j]])/np.sqrt(len(ii[j])) for j in range(r)]),9) for s2 in f2n_r] for s in fn_r]
+	t_f1 = [[2*stats.t.sf(np.abs(np.mean([f_f1[s][j]-f2_f1[s2][j] for j in pr_ii]))/np.mean([np.std([f_f1[s][j2]-f2_f1[s2][j2] for j2 in ii[j]])/np.sqrt(len(ii[j])) for j in range(r)]),9) for s2 in f2n_r] for s in fn_r]
+	t_precision = [[2*stats.t.sf(np.abs(np.mean([f_precision[s][j]-f2_precision[s2][j] for j in pr_ii]))/np.mean([np.std([f_precision[s][j2]-f2_precision[s2][j2] for j2 in ii[j]])/np.sqrt(len(ii[j])) for j in range(r)]),9) for s2 in f2n_r] for s in fn_r]
+	t_recall = [[2*stats.t.sf(np.abs(np.mean([f_recall[s][j]-f2_recall[s2][j] for j in pr_ii]))/np.mean([np.std([f_recall[s][j2]-f2_recall[s2][j2] for j2 in ii[j]])/np.sqrt(len(ii[j])) for j in range(r)]),9) for s2 in f2n_r] for s in fn_r]
+	t_auc = [[2*stats.t.sf(np.abs(np.mean([f_auc[s][j]-f2_auc[s2][j] for j in pr_ii]))/np.mean([np.std([f_auc[s][j2]-f2_auc[s2][j2] for j2 in ii[j]])/np.sqrt(len(ii[j])) for j in range(r)]),9) for s2 in f2n_r] for s in fn_r]
 
 	#save statistical test
 	for s in range(len(fn)):

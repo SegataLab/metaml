@@ -12,6 +12,7 @@ class plot_par:
 	aspect_ratio = 'auto'
 	bbox = dict(boxstyle='round4, pad=0.3', fc='none', ec='k', lw=1)
 	bbox_plot = 'yes'
+	car_split = '\\n'
 	cbar_extend = 'min'
 	cbar_shrink = 0.9
 	cbar_ticksnumber = 6
@@ -59,7 +60,7 @@ if __name__ == "__main__":
 	fm = pd.DataFrame(data=np.nan, index=range(f.shape[0]-plot_par.xticks_n), columns=range(f.shape[1]-plot_par.yticks_n))
 	for i in range(f.shape[0]-plot_par.xticks_n):
 		for j in range(plot_par.yticks_n,f.shape[1]):
-			t = f.iloc[i,j].split('\\n')[0]
+			t = f.iloc[i,j].split(plot_par.car_split)[0]
 			if isfloat(t):
 				if float(t)<=1:
 					fm.iloc[i,j-plot_par.yticks_n] = float(t)
