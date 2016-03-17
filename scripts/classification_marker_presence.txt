@@ -1,0 +1,221 @@
+###DISEASE
+
+##CV ON SINGLE DATASET
+python classification.py data/marker_presence_cirrhosis.txt results/marker_presence_cirrhosis__d-disease__l-rf -d 1:disease:cirrhosis -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_cirrhosis.txt results/marker_presence_cirrhosis__d-disease__l-svm -d 1:disease:cirrhosis -l svm -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_cirrhosis.txt results/marker_presence_cirrhosis__d-disease__l-lasso -d 1:disease:cirrhosis -l lasso -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_cirrhosis.txt results/marker_presence_cirrhosis__d-disease__l-enet -d 1:disease:cirrhosis -l enet -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_cirrhosis.txt results/marker_presence_cirrhosis__d-disease__l-rf__i-lasso -d 1:disease:cirrhosis -z "GeneID":"gi|" -i lasso -w
+python classification.py data/marker_presence_cirrhosis.txt results/marker_presence_cirrhosis__d-disease__l-svm__i-lasso -d 1:disease:cirrhosis -l svm -z "GeneID":"gi|" -i lasso -w
+python classification.py data/marker_presence_cirrhosis.txt results/marker_presence_cirrhosis__d-disease__l-rf__i-enet -d 1:disease:cirrhosis -z "GeneID":"gi|" -i enet -w
+python classification.py data/marker_presence_cirrhosis.txt results/marker_presence_cirrhosis__d-disease__l-svm__i-enet -d 1:disease:cirrhosis -l svm -z "GeneID":"gi|" -i enet -w
+
+python classification.py data/marker_presence_colorectal--group.txt results/marker_presence_colorectal--group__d-disease__l-rf -d 1:disease:cancer -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_colorectal--group.txt results/marker_presence_colorectal--group__d-disease__l-svm -d 1:disease:cancer -l svm -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_colorectal--group.txt results/marker_presence_colorectal--group__d-disease__l-lasso -d 1:disease:cancer -l lasso -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_colorectal--group.txt results/marker_presence_colorectal--group__d-disease__l-enet -d 1:disease:cancer -l enet -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_colorectal--group.txt results/marker_presence_colorectal--group__d-disease__l-rf__i-lasso -d 1:disease:cancer -z "GeneID":"gi|" -i lasso -w
+python classification.py data/marker_presence_colorectal--group.txt results/marker_presence_colorectal--group__d-disease__l-svm__i-lasso -d 1:disease:cancer -l svm -z "GeneID":"gi|" -i lasso -w
+python classification.py data/marker_presence_colorectal--group.txt results/marker_presence_colorectal--group__d-disease__l-rf__i-enet -d 1:disease:cancer -z "GeneID":"gi|" -i enet -w
+python classification.py data/marker_presence_colorectal--group.txt results/marker_presence_colorectal--group__d-disease__l-svm__i-enet -d 1:disease:cancer -l svm -z "GeneID":"gi|" -i enet -w
+
+python classification.py data/marker_presence_obesity.txt results/marker_presence_obesity__d-disease__l-rf -d 1:disease:obesity -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_obesity.txt results/marker_presence_obesity__d-disease__l-svm -d 1:disease:obesity -l svm -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_obesity.txt results/marker_presence_obesity__d-disease__l-lasso -d 1:disease:obesity -l lasso -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_obesity.txt results/marker_presence_obesity__d-disease__l-enet -d 1:disease:obesity -l enet -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_obesity.txt results/marker_presence_obesity__d-disease__l-rf__i-lasso -d 1:disease:obesity -z "GeneID":"gi|" -i lasso -w
+python classification.py data/marker_presence_obesity.txt results/marker_presence_obesity__d-disease__l-svm__i-lasso -d 1:disease:obesity -l svm -z "GeneID":"gi|" -i lasso -w
+python classification.py data/marker_presence_obesity.txt results/marker_presence_obesity__d-disease__l-rf__i-enet -d 1:disease:obesity -z "GeneID":"gi|" -i enet -w
+python classification.py data/marker_presence_obesity.txt results/marker_presence_obesity__d-disease__l-svm__i-enet -d 1:disease:obesity -l svm -z "GeneID":"gi|" -i enet -w
+
+python classification.py data/marker_presence_ibd.txt results/marker_presence_ibd__d-disease__l-rf -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_ibd.txt results/marker_presence_ibd__d-disease__l-svm -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease -l svm -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_ibd.txt results/marker_presence_ibd__d-disease__l-lasso -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease -l lasso -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_ibd.txt results/marker_presence_ibd__d-disease__l-enet -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease -l enet -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_ibd.txt results/marker_presence_ibd__d-disease__l-rf__i-lasso -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease -z "GeneID":"gi|" -i lasso -w
+python classification.py data/marker_presence_ibd.txt results/marker_presence_ibd__d-disease__l-svm__i-lasso -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease -l svm -z "GeneID":"gi|" -i lasso -w
+python classification.py data/marker_presence_ibd.txt results/marker_presence_ibd__d-disease__l-rf__i-enet -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease -z "GeneID":"gi|" -i enet -w
+python classification.py data/marker_presence_ibd.txt results/marker_presence_ibd__d-disease__l-svm__i-enet -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease -l svm -z "GeneID":"gi|" -i enet -w
+
+python classification.py data/marker_presence_t2d_long-t2d_short.txt results/marker_presence_t2d_long-t2d_short__d-disease__l-rf -d 1:disease:t2d -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_t2d_long-t2d_short.txt results/marker_presence_t2d_long-t2d_short__d-disease__l-svm -d 1:disease:t2d -l svm -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_t2d_long-t2d_short.txt results/marker_presence_t2d_long-t2d_short__d-disease__l-lasso -d 1:disease:t2d -l lasso -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_t2d_long-t2d_short.txt results/marker_presence_t2d_long-t2d_short__d-disease__l-enet -d 1:disease:t2d -l enet -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_t2d_long-t2d_short.txt results/marker_presence_t2d_long-t2d_short__d-disease__l-rf__i-lasso -d 1:disease:t2d -z "GeneID":"gi|" -i lasso -w
+python classification.py data/marker_presence_t2d_long-t2d_short.txt results/marker_presence_t2d_long-t2d_short__d-disease__l-svm__i-lasso -d 1:disease:t2d -l svm -z "GeneID":"gi|" -i lasso -w
+python classification.py data/marker_presence_t2d_long-t2d_short.txt results/marker_presence_t2d_long-t2d_short__d-disease__l-rf__i-enet -d 1:disease:t2d -z "GeneID":"gi|" -i enet -w
+python classification.py data/marker_presence_t2d_long-t2d_short.txt results/marker_presence_t2d_long-t2d_short__d-disease__l-svm__i-enet -d 1:disease:t2d -l svm -z "GeneID":"gi|" -i enet -w
+
+python classification.py data/marker_presence_WT2D.txt results/marker_presence_WT2D__d-disease__l-rf -d 1:disease:t2d -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_WT2D.txt results/marker_presence_WT2D__d-disease__l-svm -d 1:disease:t2d -l svm -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_WT2D.txt results/marker_presence_WT2D__d-disease__l-lasso -d 1:disease:t2d -l lasso -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_WT2D.txt results/marker_presence_WT2D__d-disease__l-enet -d 1:disease:t2d -l enet -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_WT2D.txt results/marker_presence_WT2D__d-disease__l-rf__i-lasso -d 1:disease:t2d -z "GeneID":"gi|" -i lasso -w
+python classification.py data/marker_presence_WT2D.txt results/marker_presence_WT2D__d-disease__l-svm__i-lasso -d 1:disease:t2d -l svm -z "GeneID":"gi|" -i lasso -w
+python classification.py data/marker_presence_WT2D.txt results/marker_presence_WT2D__d-disease__l-rf__i-enet -d 1:disease:t2d -z "GeneID":"gi|" -i enet -w
+python classification.py data/marker_presence_WT2D.txt results/marker_presence_WT2D__d-disease__l-svm__i-enet -d 1:disease:t2d -l svm -z "GeneID":"gi|" -i enet -w
+
+##CV AND TRANSFER BETWEEN STAGES
+#CIRRHOSIS
+python classification.py data/marker_presence_cirrhosis--stagediscovery.txt results/marker_presence_cirrhosis--stagediscovery__d-disease__l-rf -d 1:disease:cirrhosis -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_cirrhosis--stagediscovery.txt results/marker_presence_cirrhosis--stagediscovery__d-disease__l-svm -d 1:disease:cirrhosis -l svm -z "GeneID":"gi|" -w
+
+python classification.py data/marker_presence_cirrhosis--stagevalidation.txt results/marker_presence_cirrhosis--stagevalidation__d-disease__l-rf -d 1:disease:cirrhosis -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_cirrhosis--stagevalidation.txt results/marker_presence_cirrhosis--stagevalidation__d-disease__l-svm -d 1:disease:cirrhosis -l svm -z "GeneID":"gi|" -w
+
+python classification.py data/marker_presence_cirrhosis.txt results/marker_presence_cirrhosis__d-disease__t-validation__l-rf -d 1:disease:cirrhosis -t stage:validation -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_cirrhosis.txt results/marker_presence_cirrhosis__d-disease__t-validation__l-svm -d 1:disease:cirrhosis -t stage:validation -l svm -z "GeneID":"gi|" -w
+
+python classification.py data/marker_presence_cirrhosis.txt results/marker_presence_cirrhosis__d-disease__t-discovery__l-rf -d 1:disease:cirrhosis -t stage:discovery -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_cirrhosis.txt results/marker_presence_cirrhosis__d-disease__t-discovery__l-svm -d 1:disease:cirrhosis -t stage:discovery -l svm -z "GeneID":"gi|" -w
+#T2D+WT2D
+python classification.py data/marker_presence_t2d_long-t2d_short--stagei.txt results/marker_presence_t2d_long-t2d_short--stagei__d-disease__l-rf -d 1:disease:t2d -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_t2d_long-t2d_short--stagei.txt results/marker_presence_t2d_long-t2d_short--stagei__d-disease__l-svm -d 1:disease:t2d -l svm -z "GeneID":"gi|" -w
+
+python classification.py data/marker_presence_t2d_long-t2d_short--stageii.txt results/marker_presence_t2d_long-t2d_short--stageii__d-disease__l-rf -d 1:disease:t2d -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_t2d_long-t2d_short--stageii.txt results/marker_presence_t2d_long-t2d_short--stageii__d-disease__l-svm -d 1:disease:t2d -l svm -z "GeneID":"gi|" -w
+
+python classification.py data/marker_presence_t2d_long-t2d_short.txt results/marker_presence_t2d_long-t2d_short__d-disease__t-stageii__l-rf -d 1:disease:t2d -t stage:stage_ii -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_t2d_long-t2d_short.txt results/marker_presence_t2d_long-t2d_short__d-disease__t-stageii__l-svm -d 1:disease:t2d -l svm -t stage:stage_ii -z "GeneID":"gi|" -w
+
+python classification.py data/marker_presence_t2d_long-t2d_short.txt results/marker_presence_t2d_long-t2d_short__d-disease__t-stagei__l-rf -d 1:disease:t2d -t stage:stage_i -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_t2d_long-t2d_short.txt results/marker_presence_t2d_long-t2d_short__d-disease__t-stagei__l-svm -d 1:disease:t2d -l svm -t stage:stage_i -z "GeneID":"gi|" -w
+
+python classification.py data/marker_presence_t2d_long-t2d_short-WT2D.txt results/marker_presence_t2d_long-t2d_short-WT2D__d-disease__l-rf -d 1:disease:t2d -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_t2d_long-t2d_short-WT2D.txt results/marker_presence_t2d_long-t2d_short-WT2D__d-disease__l-svm -d 1:disease:t2d -l svm -z "GeneID":"gi|" -w
+
+python classification.py data/marker_presence_t2d_long-t2d_short-WT2D.txt results/marker_presence_t2d_long-t2d_short-WT2D__d-disease__t-WT2D__l-rf -d 1:disease:t2d -t dataset_name:WT2D -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_t2d_long-t2d_short-WT2D.txt results/marker_presence_t2d_long-t2d_short-WT2D__d-disease__t-WT2D__l-svm -d 1:disease:t2d -l svm -t dataset_name:WT2D -z "GeneID":"gi|" -w
+
+python classification.py data/marker_presence_t2d_long-t2d_short-WT2D.txt results/marker_presence_t2d_long-t2d_short-WT2D__d-disease__t-t2d_long-t2d_short__l-rf -d 1:disease:t2d -t dataset_name:t2dmeta_long:t2dmeta_short -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_t2d_long-t2d_short-WT2D.txt results/marker_presence_t2d_long-t2d_short-WT2D__d-disease__t-t2d_long-t2d_short__l-svm -l svm -d 1:disease:t2d -t dataset_name:t2dmeta_long:t2dmeta_short -z "GeneID":"gi|" -w
+
+python classification.py data/marker_presence_t2d_long-t2d_short--stagei-WT2D.txt results/marker_presence_t2d_long-t2d_short--stagei-WT2D__d-disease__t-WT2D__l-rf -d 1:disease:t2d -t dataset_name:WT2D -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_t2d_long-t2d_short--stagei-WT2D.txt results/marker_presence_t2d_long-t2d_short--stagei-WT2D__d-disease__t-WT2D__l-svm -l svm -d 1:disease:t2d -t dataset_name:WT2D -z "GeneID":"gi|" -w
+
+python classification.py data/marker_presence_t2d_long-t2d_short--stageii-WT2D.txt results/marker_presence_t2d_long-t2d_short--stageii-WT2D__d-disease__t-WT2D__l-rf -d 1:disease:t2d -t dataset_name:WT2D -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_t2d_long-t2d_short--stageii-WT2D.txt results/marker_presence_t2d_long-t2d_short--stageii-WT2D__d-disease__t-WT2D__l-svm -l svm -d 1:disease:t2d -t dataset_name:WT2D -z "GeneID":"gi|" -w
+
+python classification.py data/marker_presence_t2d_long-t2d_short--stagei-WT2D.txt results/marker_presence_t2d_long-t2d_short--stagei-WT2D__d-disease__t-t2d_long-t2d_short__l-rf -d 1:disease:t2d -t dataset_name:t2dmeta_long:t2dmeta_short -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_t2d_long-t2d_short--stagei-WT2D.txt results/marker_presence_t2d_long-t2d_short--stagei-WT2D__d-disease__t-t2d_long-t2d_short__l-svm -l svm -d 1:disease:t2d -t dataset_name:t2dmeta_long:t2dmeta_short -z "GeneID":"gi|" -w
+
+python classification.py data/marker_presence_t2d_long-t2d_short--stageii-WT2D.txt results/marker_presence_t2d_long-t2d_short--stageii-WT2D__d-disease__t-t2d_long-t2d_short__l-rf -d 1:disease:t2d -t dataset_name:t2dmeta_long:t2dmeta_short -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_t2d_long-t2d_short--stageii-WT2D.txt results/marker_presence_t2d_long-t2d_short--stageii-WT2D__d-disease__t-t2d_long-t2d_short__l-svm -l svm -d 1:disease:t2d -t dataset_name:t2dmeta_long:t2dmeta_short -z "GeneID":"gi|" -w
+#OTHERS, T2D CLASSIFICATION
+python classification.py data/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d.txt results/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d__d-disease__l-rf__u-subjectID -d 1:disease:t2d -u subjectID -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d.txt results/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d__d-disease__l-svm__u-subjectID -l svm -d 1:disease:t2d -r 5 -u subjectID -z "GeneID":"gi|" -w
+
+python classification.py data/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d.txt results/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d__d-disease__t-cirrhosis__l-rf -d 1:disease:t2d -t dataset_name:Quin_gut_liver_cirrhosis -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d.txt results/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d__d-disease__t-cirrhosis__l-svm -l svm -d 1:disease:t2d -t dataset_name:Quin_gut_liver_cirrhosis -z "GeneID":"gi|" -w
+
+python classification.py data/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d.txt results/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d__d-disease__t-colorectal__l-rf -d 1:disease:t2d -t dataset_name:Zeller_fecal_colorectal_cancer -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d.txt results/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d__d-disease__t-colorectal__l-svm -l svm -d 1:disease:t2d -t dataset_name:Zeller_fecal_colorectal_cancer -z "GeneID":"gi|" -w
+
+python classification.py data/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d.txt results/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d__d-disease__t-hmp-hmpii__l-rf -d 1:disease:t2d -t dataset_name:hmp:hmpii -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d.txt results/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d__d-disease__t-hmp-hmpii__l-svm -l svm -d 1:disease:t2d -t dataset_name:hmp:hmpii -z "GeneID":"gi|" -w
+
+python classification.py data/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d.txt results/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d__d-disease__t-ibd__l-rf -d 1:disease:t2d -t dataset_name:metahit -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d.txt results/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d__d-disease__t-ibd__l-svm -l svm -d 1:disease:t2d -t dataset_name:metahit -z "GeneID":"gi|" -w
+
+python classification.py data/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d.txt results/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d__d-disease__t-t2d_long-t2d_short__l-rf -d 1:disease:t2d -t dataset_name:t2dmeta_long:t2dmeta_short -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d.txt results/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d__d-disease__t-t2d_long-t2d_short__l-svm -l svm -d 1:disease:t2d -t dataset_name:t2dmeta_long:t2dmeta_short -z "GeneID":"gi|" -w
+
+python classification.py data/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d.txt results/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d__d-disease__t-t2d_long-t2d_short-stagei__l-rf -d 1:disease:t2d -t stage:stage_i -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d.txt results/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d__d-disease__t-t2d_long-t2d_short-stagei__l-svm -l svm -d 1:disease:t2d -t stage:stage_i -z "GeneID":"gi|" -w
+
+python classification.py data/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d.txt results/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d__d-disease__t-t2d_long-t2d_short-stageii__l-rf -d 1:disease:t2d -t stage:stage_ii -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d.txt results/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d__d-disease__t-t2d_long-t2d_short-stageii__l-svm -l svm -d 1:disease:t2d -t stage:stage_ii -z "GeneID":"gi|" -w
+
+python classification.py data/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d.txt results/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d__d-disease__t-WT2D__l-rf -d 1:disease:t2d -t dataset_name:WT2D -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d.txt results/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d__d-disease__t-WT2D__l-svm -l svm -d 1:disease:t2d -t dataset_name:WT2D -z "GeneID":"gi|" -w
+
+#OTHERS, DISEASE CLASSIFICATION
+python classification.py data/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool.txt results/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool__d-disease__l-rf__u-subjectID -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease:cirrhosis:t2d:cancer -u subjectID -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool.txt results/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool__d-disease__l-svm__u-subjectID -l svm -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease:cirrhosis:t2d:cancer -r 5 -u subjectID -z "GeneID":"gi|" -w
+
+python classification.py data/marker_presence_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool.txt results/marker_presence_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool__d-disease__l-rf__u-subjectID -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease:cirrhosis:t2d:cancer -u subjectID -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool.txt results/marker_presence_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool__d-disease__l-svm__u-subjectID -l svm -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease:cirrhosis:t2d:cancer -r 5 -u subjectID -z "GeneID":"gi|" -w
+
+python classification.py data/marker_presence_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool.txt results/marker_presence_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool__d-disease__t-cirrhosis__l-rf__u-subjectID -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease:cirrhosis:t2d:cancer -t dataset_name:Quin_gut_liver_cirrhosis -u subjectID -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool.txt results/marker_presence_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool__d-disease__t-cirrhosis__l-svm__u-subjectID -l svm -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease:cirrhosis:t2d:cancer -t dataset_name:Quin_gut_liver_cirrhosis -u subjectID -z "GeneID":"gi|" -w
+
+python classification.py data/marker_presence_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool.txt results/marker_presence_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool__d-disease__t-colorectal__l-rf__u-subjectID -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease:cirrhosis:t2d:cancer -t dataset_name:Zeller_fecal_colorectal_cancer -u subjectID -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool.txt results/marker_presence_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool__d-disease__t-colorectal__l-svm__u-subjectID -l svm -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease:cirrhosis:t2d:cancer -t dataset_name:Zeller_fecal_colorectal_cancer -u subjectID -z "GeneID":"gi|" -w
+
+python classification.py data/marker_presence_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool.txt results/marker_presence_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool__d-disease__t-ibd__l-rf__u-subjectID -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease:cirrhosis:t2d:cancer -t dataset_name:metahit -u subjectID -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool.txt results/marker_presence_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool__d-disease__t-ibd__l-svm__u-subjectID -l svm -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease:cirrhosis:t2d:cancer -t dataset_name:metahit -u subjectID -z "GeneID":"gi|" -w
+
+python classification.py data/marker_presence_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool.txt results/marker_presence_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool__d-disease__t-t2d_long-t2d_short__l-rf__u-subjectID -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease:cirrhosis:t2d:cancer -t dataset_name:t2dmeta_long:t2dmeta_short -u subjectID -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool.txt results/marker_presence_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool__d-disease__t-t2d_long-t2d_short__l-svm__u-subjectID -l svm -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease:cirrhosis:t2d:cancer -t dataset_name:t2dmeta_long:t2dmeta_short -u subjectID -z "GeneID":"gi|" -w
+
+python classification.py data/marker_presence_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool.txt results/marker_presence_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool__d-disease__t-t2d_long-t2d_short-stagei__l-rf__u-subjectID -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease:cirrhosis:t2d:cancer -t stage:stage_i -u subjectID -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool.txt results/marker_presence_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool__d-disease__t-t2d_long-t2d_short-stagei__l-svm__u-subjectID -l svm -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease:cirrhosis:t2d:cancer -t stage:stage_i -u subjectID -z "GeneID":"gi|" -w
+
+python classification.py data/marker_presence_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool.txt results/marker_presence_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool__d-disease__t-t2d_long-t2d_short-stageii__l-rf__u-subjectID -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease:cirrhosis:t2d:cancer -t stage:stage_ii -u subjectID -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool.txt results/marker_presence_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool__d-disease__t-t2d_long-t2d_short-stageii__l-svm__u-subjectID -l svm -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease:cirrhosis:t2d:cancer -t stage:stage_ii -u subjectID -z "GeneID":"gi|" -w
+
+python classification.py data/marker_presence_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool.txt results/marker_presence_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool__d-disease__t-WT2D__l-rf__u-subjectID -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease:cirrhosis:t2d:cancer -t dataset_name:WT2D -u subjectID -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool.txt results/marker_presence_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool__d-disease__t-WT2D__l-svm__u-subjectID -l svm -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease:cirrhosis:t2d:cancer -t dataset_name:WT2D -u subjectID -z "GeneID":"gi|" -w
+
+###BODYSITE
+python classification.py data/marker_presence_hmp-hmpii.txt results/marker_presence_hmp-hmpii__d-bodysite__l-rf__u-subjectID -d 1:bodysite:stool,2:bodysite:anterior_nares,3:bodysite:l_retroauricular_crease:r_retroauricular_crease,4:bodysite:mid_vagina:posterior_fornix:vaginal_introitus -r 3 -u subjectID -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_hmp-hmpii.txt results/marker_presence_hmp-hmpii__d-bodysite__l-svm__u-subjectID -d 1:bodysite:stool,2:bodysite:anterior_nares,3:bodysite:l_retroauricular_crease:r_retroauricular_crease,4:bodysite:mid_vagina:posterior_fornix:vaginal_introitus -r 3 -l svm -u subjectID -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_hmp-hmpii.txt results/marker_presence_hmp-hmpii__d-bodysite__l-rf__u-subjectID-bodysite -d 1:bodysite:stool,2:bodysite:anterior_nares,3:bodysite:l_retroauricular_crease:r_retroauricular_crease,4:bodysite:mid_vagina:posterior_fornix:vaginal_introitus -r 3 -u subjectID:bodysite -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_hmp-hmpii.txt results/marker_presence_hmp-hmpii__d-bodysite__l-svm__u-subjectID-bodysite -d 1:bodysite:stool,2:bodysite:anterior_nares,3:bodysite:l_retroauricular_crease:r_retroauricular_crease,4:bodysite:mid_vagina:posterior_fornix:vaginal_introitus -r 3 -l svm -u subjectID:bodysite -z "GeneID":"gi|" -w
+
+###GENDER
+##CV ON SINGLE DATASET
+python classification.py data/marker_presence_hmp-hmpii.txt results/marker_presence_hmp-hmpii__d-gender__l-rf__u-subjectID -r 5 -d 1:gender:male -u subjectID -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_hmp-hmpii.txt results/marker_presence_hmp-hmpii__d-gender__l-rf__u-subjectID__b -r 5 -d 1:gender:male -u subjectID -b -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_hmp-hmpii.txt results/marker_presence_hmp-hmpii__d-gender__l-svm__u-subjectID -r 5 -d 1:gender:male -u subjectID -l svm -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_hmp-hmpii.txt results/marker_presence_hmp-hmpii__d-gender__l-svm__u-subjectID__b -r 5 -d 1:gender:male -u subjectID -b -l svm -z "GeneID":"gi|" -w
+
+python classification.py data/marker_presence_ibd.txt results/marker_presence_ibd__d-gender__l-rf -r 5 -d 1:gender:male -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_ibd.txt results/marker_presence_ibd__d-gender__l-rf__b -r 5 -d 1:gender:male -b -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_ibd.txt results/marker_presence_ibd__d-gender__l-svm -r 5 -d 1:gender:male -l svm -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_ibd.txt results/marker_presence_ibd__d-gender__l-svm__b -r 5 -d 1:gender:male -b -l svm -z "GeneID":"gi|" -w
+
+python classification.py data/marker_presence_cirrhosis.txt results/marker_presence_cirrhosis__d-gender__l-rf -r 5 -d 1:gender:male -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_cirrhosis.txt results/marker_presence_cirrhosis__d-gender__l-rf__b -r 5 -d 1:gender:male -b -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_cirrhosis.txt results/marker_presence_cirrhosis__d-gender__l-svm -r 5 -d 1:gender:male -l svm -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_cirrhosis.txt results/marker_presence_cirrhosis__d-gender__l-svm__b -r 5 -d 1:gender:male -b -l svm -z "GeneID":"gi|" -w
+
+python classification.py data/marker_presence_skin.txt results/marker_presence_skin__d-gender__l-rf__u-subjectID -r 5 -d 1:gender:male -u subjectID -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_skin.txt results/marker_presence_skin__d-gender__l-rf__u-subjectID__b -r 5 -d 1:gender:male -u subjectID -b -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_skin.txt results/marker_presence_skin__d-gender__l-svm__u-subjectID -r 5 -d 1:gender:male -u subjectID -l svm -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_skin.txt results/marker_presence_skin__d-gender__l-svm__u-subjectID__b -r 5 -d 1:gender:male -u subjectID -b -l svm -z "GeneID":"gi|" -w
+
+python classification.py data/marker_presence_t2d_long-t2d_short.txt results/marker_presence_t2d_long-t2d_short__d-gender__l-rf -r 5 -d 1:gender:male -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_t2d_long-t2d_short.txt results/marker_presence_t2d_long-t2d_short__d-gender__l-rf__b -r 5 -d 1:gender:male -b -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_t2d_long-t2d_short.txt results/marker_presence_t2d_long-t2d_short__d-gender__l-svm -r 5 -d 1:gender:male -l svm -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_t2d_long-t2d_short.txt results/marker_presence_t2d_long-t2d_short__d-gender__l-svm__b -r 5 -d 1:gender:male -b -l svm -z "GeneID":"gi|" -w
+
+python classification.py data/marker_presence_colorectal--group.txt results/marker_presence_colorectal--group__d-gender__l-rf -r 5 -d 1:gender:male -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_colorectal--group.txt results/marker_presence_colorectal--group__d-gender__l-rf__b -r 5 -d 1:gender:male -b -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_colorectal--group.txt results/marker_presence_colorectal--group__d-gender__l-svm -r 5 -d 1:gender:male -l svm -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_colorectal--group.txt results/marker_presence_colorectal--group__d-gender__l-svm__b -r 5 -d 1:gender:male -b -l svm -z "GeneID":"gi|" -w
+##TRANSFER BETWEEN STAGES
+python classification.py data/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool.txt results/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool__d-gender__t-hmp-hmpii__l-rf -r 1 -d 1:gender:male -t dataset_name:hmp:hmpii -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool.txt results/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool__d-gender__t-hmp-hmpii__l-svm -r 1 -d 1:gender:male -t dataset_name:hmp:hmpii -l svm -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool--disease-n.txt results/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool--disease-n__d-gender__t-hmp-hmpii__l-rf -r 1 -d 1:gender:male -t dataset_name:hmp:hmpii -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool--disease-n.txt results/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool--disease-n__d-gender__t-hmp-hmpii__l-svm -r 1 -d 1:gender:male -t dataset_name:hmp:hmpii -l svm -z "GeneID":"gi|" -w
+
+python classification.py data/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool.txt results/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool__d-gender__t-ibd__l-rf -r 1 -d 1:gender:male -t dataset_name:metahit -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool.txt results/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool__d-gender__t-ibd__l-svm -r 1 -d 1:gender:male -t dataset_name:metahit -l svm -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool--disease-n.txt results/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool--disease-n__d-gender__t-ibd__l-rf -r 1 -d 1:gender:male -t dataset_name:metahit -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool--disease-n.txt results/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool--disease-n__d-gender__t-ibd__l-svm -r 1 -d 1:gender:male -t dataset_name:metahit -l svm -z "GeneID":"gi|" -w
+
+python classification.py data/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool.txt results/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool__d-gender__t-cirrhosis__l-rf -r 1 -d 1:gender:male -t dataset_name:Quin_gut_liver_cirrhosis -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool.txt results/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool__d-gender__t-cirrhosis__l-svm -r 1 -d 1:gender:male -t dataset_name:Quin_gut_liver_cirrhosis -l svm -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool--disease-n.txt results/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool--disease-n__d-gender__t-cirrhosis__l-rf -r 1 -d 1:gender:male -t dataset_name:Quin_gut_liver_cirrhosis -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool--disease-n.txt results/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool--disease-n__d-gender__t-cirrhosis__l-svm -r 1 -d 1:gender:male -t dataset_name:Quin_gut_liver_cirrhosis -l svm -z "GeneID":"gi|" -w
+
+python classification.py data/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool.txt results/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool__d-gender__t-t2d_long-t2d_short__l-rf -r 1 -d 1:gender:male -t dataset_name:t2dmeta_long:t2dmeta_short -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool.txt results/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool__d-gender__t-t2d_long-t2d_short__l-svm -r 1 -d 1:gender:male -t dataset_name:t2dmeta_long:t2dmeta_short -l svm -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool--disease-n.txt results/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool--disease-n__d-gender__t-t2d_long-t2d_short__l-rf -r 1 -d 1:gender:male -t dataset_name:t2dmeta_long:t2dmeta_short -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool--disease-n.txt results/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool--disease-n__d-gender__t-t2d_long-t2d_short__l-svm -r 1 -d 1:gender:male -t dataset_name:t2dmeta_long:t2dmeta_short -l svm -z "GeneID":"gi|" -w
+
+python classification.py data/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool.txt results/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool__d-gender__t-colorectal__l-rf -r 1 -d 1:gender:male -t dataset_name:Zeller_fecal_colorectal_cancer -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool.txt results/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool__d-gender__t-colorectal__l-svm -r 1 -d 1:gender:male -t dataset_name:Zeller_fecal_colorectal_cancer -l svm -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool--disease-n.txt results/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool--disease-n__d-gender__t-colorectal__l-rf -r 1 -d 1:gender:male -t dataset_name:Zeller_fecal_colorectal_cancer -z "GeneID":"gi|" -w
+python classification.py data/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool--disease-n.txt results/marker_presence_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool--disease-n__d-gender__t-colorectal__l-svm -r 1 -d 1:gender:male -t dataset_name:Zeller_fecal_colorectal_cancer -l svm -z "GeneID":"gi|" -w

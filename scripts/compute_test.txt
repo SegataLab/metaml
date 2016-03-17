@@ -1,0 +1,61 @@
+###DISEASE
+#TRUE VS RANDOM LABELS
+python tools/compute_test.py results/abundance_cirrhosis__d-disease__l-rf_estimations.txt results/abundance_cirrhosis__d-disease__l-rf__b_estimations.txt results/abundance_cirrhosis__d-disease__l-rf_test
+python tools/compute_test.py results/abundance_cirrhosis__d-disease__l-svm_estimations.txt results/abundance_cirrhosis__d-disease__l-svm__b_estimations.txt results/abundance_cirrhosis__d-disease__l-svm_test
+
+python tools/compute_test.py results/abundance_colorectal--group__d-disease__l-rf_estimations.txt results/abundance_colorectal--group__d-disease__l-rf__b_estimations.txt results/abundance_colorectal--group__d-disease__l-rf_test
+python tools/compute_test.py results/abundance_colorectal--group__d-disease__l-svm_estimations.txt results/abundance_colorectal--group__d-disease__l-svm__b_estimations.txt results/abundance_colorectal--group__d-disease__l-svm_test
+
+python tools/compute_test.py results/abundance_ibd__d-disease__l-rf_estimations.txt results/abundance_ibd__d-disease__l-rf__b_estimations.txt results/abundance_ibd__d-disease__l-rf_test
+python tools/compute_test.py results/abundance_ibd__d-disease__l-svm_estimations.txt results/abundance_ibd__d-disease__l-svm__b_estimations.txt results/abundance_ibd__d-disease__l-svm_test
+
+python tools/compute_test.py results/abundance_obesity__d-disease__l-rf_estimations.txt results/abundance_obesity__d-disease__l-rf__b_estimations.txt results/abundance_obesity__d-disease__l-rf_test
+python tools/compute_test.py results/abundance_obesity__d-disease__l-svm_estimations.txt results/abundance_obesity__d-disease__l-svm__b_estimations.txt results/abundance_obesity__d-disease__l-svm_test
+
+python tools/compute_test.py results/abundance_t2d_long-t2d_short__d-disease__l-rf_estimations.txt results/abundance_t2d_long-t2d_short__d-disease__l-rf__b_estimations.txt results/abundance_t2d_long-t2d_short__d-disease__l-rf_test
+python tools/compute_test.py results/abundance_t2d_long-t2d_short__d-disease__l-svm_estimations.txt results/abundance_t2d_long-t2d_short__d-disease__l-svm__b_estimations.txt results/abundance_t2d_long-t2d_short__d-disease__l-svm_test
+
+python tools/compute_test.py results/abundance_WT2D__d-disease__l-rf_estimations.txt results/abundance_WT2D__d-disease__l-rf__b_estimations.txt results/abundance_WT2D__d-disease__l-rf_test
+python tools/compute_test.py results/abundance_WT2D__d-disease__l-svm_estimations.txt results/abundance_WT2D__d-disease__l-svm__b_estimations.txt results/abundance_WT2D__d-disease__l-svm_test
+#RF VS SVM + SPECIES ABUNDANCES VS MARKER PRESENCE
+python tools/compute_test.py results/abundance_cirrhosis__d-disease__l-rf_estimations.txt results/abundance_cirrhosis__d-disease__l-svm_estimations.txt results/abundance_cirrhosis__d-disease__l-rf--svm_test
+python tools/compute_test.py results/abundance_cirrhosis__d-disease__l-rf_estimations.txt results/marker_presence_cirrhosis__d-disease__l-rf_estimations.txt results/abundance--marker-presence_cirrhosis__d-disease__l-rf_test
+python tools/compute_test.py results/abundance_cirrhosis__d-disease__l-rf_estimations.txt results/marker_presence_cirrhosis__d-disease__l-svm_estimations.txt results/abundance--marker_presence_cirrhosis__d-disease__l-rf--svm_test
+python tools/compute_test.py results/abundance_cirrhosis__d-disease__l-svm_estimations.txt results/marker_presence_cirrhosis__d-disease__l-rf_estimations.txt results/abundance--marker_presence_cirrhosis__d-disease__l-svm--rf_test
+python tools/compute_test.py results/abundance_cirrhosis__d-disease__l-svm_estimations.txt results/marker_presence_cirrhosis__d-disease__l-svm_estimations.txt results/abundance--marker_presence_cirrhosis__d-disease__l-svm_test
+python tools/compute_test.py results/marker_presence_cirrhosis__d-disease__l-rf_estimations.txt results/marker_presence_cirrhosis__d-disease__l-svm_estimations.txt results/marker_presence_cirrhosis__d-disease__l-rf--svm_test
+
+python tools/compute_test.py results/abundance_colorectal--group__d-disease__l-rf_estimations.txt results/abundance_colorectal--group__d-disease__l-svm_estimations.txt results/abundance_colorectal--group__d-disease__l-rf--svm_test
+python tools/compute_test.py results/abundance_colorectal--group__d-disease__l-rf_estimations.txt results/marker_presence_colorectal--group__d-disease__l-rf_estimations.txt results/abundance--marker-presence_colorectal--group__d-disease__l-rf_test
+python tools/compute_test.py results/abundance_colorectal--group__d-disease__l-rf_estimations.txt results/marker_presence_colorectal--group__d-disease__l-svm_estimations.txt results/abundance--marker_presence_colorectal--group__d-disease__l-rf--svm_test
+python tools/compute_test.py results/abundance_colorectal--group__d-disease__l-svm_estimations.txt results/marker_presence_colorectal--group__d-disease__l-rf_estimations.txt results/abundance--marker_presence_colorectal--group__d-disease__l-svm--rf_test
+python tools/compute_test.py results/abundance_colorectal--group__d-disease__l-svm_estimations.txt results/marker_presence_colorectal--group__d-disease__l-svm_estimations.txt results/abundance--marker_presence_colorectal--group__d-disease__l-svm_test
+python tools/compute_test.py results/marker_presence_colorectal--group__d-disease__l-rf_estimations.txt results/marker_presence_colorectal--group__d-disease__l-svm_estimations.txt results/marker_presence_colorectal--group__d-disease__l-rf--svm_test
+
+python tools/compute_test.py results/abundance_ibd__d-disease__l-rf_estimations.txt results/abundance_ibd__d-disease__l-svm_estimations.txt results/abundance_ibd__d-disease__l-rf--svm_test
+python tools/compute_test.py results/abundance_ibd__d-disease__l-rf_estimations.txt results/marker_presence_ibd__d-disease__l-rf_estimations.txt results/abundance--marker-presence_ibd__d-disease__l-rf_test
+python tools/compute_test.py results/abundance_ibd__d-disease__l-rf_estimations.txt results/marker_presence_ibd__d-disease__l-svm_estimations.txt results/abundance--marker_presence_ibd__d-disease__l-rf--svm_test
+python tools/compute_test.py results/abundance_ibd__d-disease__l-svm_estimations.txt results/marker_presence_ibd__d-disease__l-rf_estimations.txt results/abundance--marker_presence_ibd__d-disease__l-svm--rf_test
+python tools/compute_test.py results/abundance_ibd__d-disease__l-svm_estimations.txt results/marker_presence_ibd__d-disease__l-svm_estimations.txt results/abundance--marker_presence_ibd__d-disease__l-svm_test
+python tools/compute_test.py results/marker_presence_ibd__d-disease__l-rf_estimations.txt results/marker_presence_ibd__d-disease__l-svm_estimations.txt results/marker_presence_ibd__d-disease__l-rf--svm_test
+
+python tools/compute_test.py results/abundance_obesity__d-disease__l-rf_estimations.txt results/abundance_obesity__d-disease__l-svm_estimations.txt results/abundance_obesity__d-disease__l-rf--svm_test
+python tools/compute_test.py results/abundance_obesity__d-disease__l-rf_estimations.txt results/marker_presence_obesity__d-disease__l-rf_estimations.txt results/abundance--marker-presence_obesity__d-disease__l-rf_test
+python tools/compute_test.py results/abundance_obesity__d-disease__l-rf_estimations.txt results/marker_presence_obesity__d-disease__l-svm_estimations.txt results/abundance--marker_presence_obesity__d-disease__l-rf--svm_test
+python tools/compute_test.py results/abundance_obesity__d-disease__l-svm_estimations.txt results/marker_presence_obesity__d-disease__l-rf_estimations.txt results/abundance--marker_presence_obesity__d-disease__l-svm--rf_test
+python tools/compute_test.py results/abundance_obesity__d-disease__l-svm_estimations.txt results/marker_presence_obesity__d-disease__l-svm_estimations.txt results/abundance--marker_presence_obesity__d-disease__l-svm_test
+python tools/compute_test.py results/marker_presence_obesity__d-disease__l-rf_estimations.txt results/marker_presence_obesity__d-disease__l-svm_estimations.txt results/marker_presence_obesity__d-disease__l-rf--svm_test
+
+python tools/compute_test.py results/abundance_t2d_long-t2d_short__d-disease__l-rf_estimations.txt results/abundance_t2d_long-t2d_short__d-disease__l-svm_estimations.txt results/abundance_t2d_long-t2d_short__d-disease__l-rf--svm_test
+python tools/compute_test.py results/abundance_t2d_long-t2d_short__d-disease__l-rf_estimations.txt results/marker_presence_t2d_long-t2d_short__d-disease__l-rf_estimations.txt results/abundance--marker-presence_t2d_long-t2d_short__d-disease__l-rf_test
+python tools/compute_test.py results/abundance_t2d_long-t2d_short__d-disease__l-rf_estimations.txt results/marker_presence_t2d_long-t2d_short__d-disease__l-svm_estimations.txt results/abundance--marker_presence_t2d_long-t2d_short__d-disease__l-rf--svm_test
+python tools/compute_test.py results/abundance_t2d_long-t2d_short__d-disease__l-svm_estimations.txt results/marker_presence_t2d_long-t2d_short__d-disease__l-rf_estimations.txt results/abundance--marker_presence_t2d_long-t2d_short__d-disease__l-svm--rf_test
+python tools/compute_test.py results/abundance_t2d_long-t2d_short__d-disease__l-svm_estimations.txt results/marker_presence_t2d_long-t2d_short__d-disease__l-svm_estimations.txt results/abundance--marker_presence_t2d_long-t2d_short__d-disease__l-svm_test
+python tools/compute_test.py results/marker_presence_t2d_long-t2d_short__d-disease__l-rf_estimations.txt results/marker_presence_t2d_long-t2d_short__d-disease__l-svm_estimations.txt results/marker_presence_t2d_long-t2d_short__d-disease__l-rf--svm_test
+
+python tools/compute_test.py results/abundance_WT2D__d-disease__l-rf_estimations.txt results/abundance_WT2D__d-disease__l-svm_estimations.txt results/abundance_WT2D__d-disease__l-rf--svm_test
+python tools/compute_test.py results/abundance_WT2D__d-disease__l-rf_estimations.txt results/marker_presence_WT2D__d-disease__l-rf_estimations.txt results/abundance--marker-presence_WT2D__d-disease__l-rf_test
+python tools/compute_test.py results/abundance_WT2D__d-disease__l-rf_estimations.txt results/marker_presence_WT2D__d-disease__l-svm_estimations.txt results/abundance--marker_presence_WT2D__d-disease__l-rf--svm_test
+python tools/compute_test.py results/abundance_WT2D__d-disease__l-svm_estimations.txt results/marker_presence_WT2D__d-disease__l-rf_estimations.txt results/abundance--marker_presence_WT2D__d-disease__l-svm--rf_test
+python tools/compute_test.py results/abundance_WT2D__d-disease__l-svm_estimations.txt results/marker_presence_WT2D__d-disease__l-svm_estimations.txt results/abundance--marker_presence_WT2D__d-disease__l-svm_test
+python tools/compute_test.py results/marker_presence_WT2D__d-disease__l-rf_estimations.txt results/marker_presence_WT2D__d-disease__l-svm_estimations.txt results/marker_presence_WT2D__d-disease__l-rf--svm_test

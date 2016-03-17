@@ -1,0 +1,269 @@
+###DISEASE
+
+##CV ON SINGLE DATASET
+#CIRRHOSIS
+python classification.py data/abundance_cirrhosis.txt results/abundance_cirrhosis__d-disease__l-rf -d 1:disease:cirrhosis -w
+python classification.py data/abundance_cirrhosis.txt results/abundance_cirrhosis__d-disease__l-rf__b -d 1:disease:cirrhosis -b -w
+python classification.py data/abundance_cirrhosis.txt results/abundance_cirrhosis__d-disease__l-svm -d 1:disease:cirrhosis -l svm -w
+python classification.py data/abundance_cirrhosis.txt results/abundance_cirrhosis__d-disease__l-svm__b -d 1:disease:cirrhosis -l svm -b -w
+python classification.py data/abundance_cirrhosis.txt results/abundance_cirrhosis__d-disease__l-lasso -d 1:disease:cirrhosis -l lasso -w
+python classification.py data/abundance_cirrhosis.txt results/abundance_cirrhosis__d-disease__l-lasso__b -d 1:disease:cirrhosis -l lasso -b -w
+python classification.py data/abundance_cirrhosis.txt results/abundance_cirrhosis__d-disease__l-enet -d 1:disease:cirrhosis -l enet -w
+python classification.py data/abundance_cirrhosis.txt results/abundance_cirrhosis__d-disease__l-enet__b -d 1:disease:cirrhosis -l enet -b -w
+python classification.py data/abundance_cirrhosis.txt results/abundance_cirrhosis__d-disease__l-rf__i-lasso -d 1:disease:cirrhosis -i lasso -w
+python classification.py data/abundance_cirrhosis.txt results/abundance_cirrhosis__d-disease__l-rf__i-lasso__b -d 1:disease:cirrhosis -i lasso -b -w
+python classification.py data/abundance_cirrhosis.txt results/abundance_cirrhosis__d-disease__l-svm__i-lasso -d 1:disease:cirrhosis -l svm -i lasso -w
+python classification.py data/abundance_cirrhosis.txt results/abundance_cirrhosis__d-disease__l-svm__i-lasso__b -d 1:disease:cirrhosis -l svm -i lasso -b -w
+python classification.py data/abundance_cirrhosis.txt results/abundance_cirrhosis__d-disease__l-rf__i-enet -d 1:disease:cirrhosis -i enet -w
+python classification.py data/abundance_cirrhosis.txt results/abundance_cirrhosis__d-disease__l-rf__i-enet__b -d 1:disease:cirrhosis -i enet -b -w
+python classification.py data/abundance_cirrhosis.txt results/abundance_cirrhosis__d-disease__l-svm__i-enet -d 1:disease:cirrhosis -l svm -i enet -w
+python classification.py data/abundance_cirrhosis.txt results/abundance_cirrhosis__d-disease__l-svm__i-enet__b -d 1:disease:cirrhosis -l svm -i enet -b -w
+#COLORECTAL-GROUP
+python classification.py data/abundance_colorectal--group.txt results/abundance_colorectal--group__d-disease__l-rf -d 1:disease:cancer -w
+python classification.py data/abundance_colorectal--group.txt results/abundance_colorectal--group__d-disease__l-rf__b -d 1:disease:cancer -b -w
+python classification.py data/abundance_colorectal--group.txt results/abundance_colorectal--group__d-disease__l-svm -d 1:disease:cancer -l svm -w
+python classification.py data/abundance_colorectal--group.txt results/abundance_colorectal--group__d-disease__l-svm__b -d 1:disease:cancer -l svm -b -w
+python classification.py data/abundance_colorectal--group.txt results/abundance_colorectal--group__d-disease__l-lasso -d 1:disease:cancer -l lasso -w
+python classification.py data/abundance_colorectal--group.txt results/abundance_colorectal--group__d-disease__l-lasso__b -d 1:disease:cancer -l lasso -b -w
+python classification.py data/abundance_colorectal--group.txt results/abundance_colorectal--group__d-disease__l-enet -d 1:disease:cancer -l enet -w
+python classification.py data/abundance_colorectal--group.txt results/abundance_colorectal--group__d-disease__l-enet__b -d 1:disease:cancer -l enet -b -w
+python classification.py data/abundance_colorectal--group.txt results/abundance_colorectal--group__d-disease__l-rf__i-lasso -d 1:disease:cancer -i lasso -w
+python classification.py data/abundance_colorectal--group.txt results/abundance_colorectal--group__d-disease__l-rf__i-lasso__b -d 1:disease:cancer -i lasso -b -w
+python classification.py data/abundance_colorectal--group.txt results/abundance_colorectal--group__d-disease__l-svm__i-lasso -d 1:disease:cancer -l svm -i lasso -w
+python classification.py data/abundance_colorectal--group.txt results/abundance_colorectal--group__d-disease__l-svm__i-lasso__b -d 1:disease:cancer -l svm -i lasso -b -w
+python classification.py data/abundance_colorectal--group.txt results/abundance_colorectal--group__d-disease__l-rf__i-enet -d 1:disease:cancer -i enet -w
+python classification.py data/abundance_colorectal--group.txt results/abundance_colorectal--group__d-disease__l-rf__i-enet__b -d 1:disease:cancer -i enet -b -w
+python classification.py data/abundance_colorectal--group.txt results/abundance_colorectal--group__d-disease__l-svm__i-enet -d 1:disease:cancer -l svm -i enet -w
+python classification.py data/abundance_colorectal--group.txt results/abundance_colorectal--group__d-disease__l-svm__i-enet__b -d 1:disease:cancer -l svm -i enet -b -w
+#IBD
+python classification.py data/abundance_ibd.txt results/abundance_ibd__d-disease__l-rf -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease -w
+python classification.py data/abundance_ibd.txt results/abundance_ibd__d-disease__l-rf__b -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease -b -w
+python classification.py data/abundance_ibd.txt results/abundance_ibd__d-disease__l-svm -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease -l svm -w
+python classification.py data/abundance_ibd.txt results/abundance_ibd__d-disease__l-svm__b -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease -l svm -b -w
+python classification.py data/abundance_ibd.txt results/abundance_ibd__d-disease__l-lasso -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease -l lasso -w
+python classification.py data/abundance_ibd.txt results/abundance_ibd__d-disease__l-lasso__b -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease -l lasso -b -w
+python classification.py data/abundance_ibd.txt results/abundance_ibd__d-disease__l-enet -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease -l enet -w
+python classification.py data/abundance_ibd.txt results/abundance_ibd__d-disease__l-enet__b -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease -l enet -b -w
+python classification.py data/abundance_ibd.txt results/abundance_ibd__d-disease__l-rf__i-lasso -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease -i lasso -w
+python classification.py data/abundance_ibd.txt results/abundance_ibd__d-disease__l-rf__i-lasso__b -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease -i lasso -b -w
+python classification.py data/abundance_ibd.txt results/abundance_ibd__d-disease__l-svm__i-lasso -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease -l svm -i lasso -w
+python classification.py data/abundance_ibd.txt results/abundance_ibd__d-disease__l-svm__i-lasso__b -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease -l svm -i lasso -b -w
+python classification.py data/abundance_ibd.txt results/abundance_ibd__d-disease__l-rf__i-enet -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease -i enet -w
+python classification.py data/abundance_ibd.txt results/abundance_ibd__d-disease__l-rf__i-enet__b -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease -i enet -b -w
+python classification.py data/abundance_ibd.txt results/abundance_ibd__d-disease__l-svm__i-enet -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease -l svm -i enet -w
+python classification.py data/abundance_ibd.txt results/abundance_ibd__d-disease__l-svm__i-enet__b -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease -l svm -i enet -b -w
+#OBESITY
+python classification.py data/abundance_obesity.txt results/abundance_obesity__d-disease__l-rf -d 1:disease:obesity -w
+python classification.py data/abundance_obesity.txt results/abundance_obesity__d-disease__l-rf__b -d 1:disease:obesity -b -w
+python classification.py data/abundance_obesity.txt results/abundance_obesity__d-disease__l-svm -d 1:disease:obesity -l svm -w
+python classification.py data/abundance_obesity.txt results/abundance_obesity__d-disease__l-svm__b -d 1:disease:obesity -l svm -b -w
+python classification.py data/abundance_obesity.txt results/abundance_obesity__d-disease__l-lasso -d 1:disease:obesity -l lasso -w
+python classification.py data/abundance_obesity.txt results/abundance_obesity__d-disease__l-lasso__b -d 1:disease:obesity -l lasso -b -w
+python classification.py data/abundance_obesity.txt results/abundance_obesity__d-disease__l-enet -d 1:disease:obesity -l enet -w
+python classification.py data/abundance_obesity.txt results/abundance_obesity__d-disease__l-enet__b -d 1:disease:obesity -l enet -b -w
+python classification.py data/abundance_obesity.txt results/abundance_obesity__d-disease__l-rf__i-lasso -d 1:disease:obesity -i lasso -w
+python classification.py data/abundance_obesity.txt results/abundance_obesity__d-disease__l-rf__i-lasso__b -d 1:disease:obesity -i lasso -b -w
+python classification.py data/abundance_obesity.txt results/abundance_obesity__d-disease__l-svm__i-lasso -d 1:disease:obesity -l svm -i lasso -w
+python classification.py data/abundance_obesity.txt results/abundance_obesity__d-disease__l-svm__i-lasso__b -d 1:disease:obesity -l svm -i lasso -b -w
+python classification.py data/abundance_obesity.txt results/abundance_obesity__d-disease__l-rf__i-enet -d 1:disease:obesity -i enet -w
+python classification.py data/abundance_obesity.txt results/abundance_obesity__d-disease__l-rf__i-enet__b -d 1:disease:obesity -i enet -b -w
+python classification.py data/abundance_obesity.txt results/abundance_obesity__d-disease__l-svm__i-enet -d 1:disease:obesity -l svm -i enet -w
+python classification.py data/abundance_obesity.txt results/abundance_obesity__d-disease__l-svm__i-enet__b -d 1:disease:obesity -l svm -i enet -b -w
+#T2D
+python classification.py data/abundance_t2d_long-t2d_short.txt results/abundance_t2d_long-t2d_short__d-disease__l-rf -d 1:disease:t2d -w
+python classification.py data/abundance_t2d_long-t2d_short.txt results/abundance_t2d_long-t2d_short__d-disease__l-rf__b -d 1:disease:t2d -b -w
+python classification.py data/abundance_t2d_long-t2d_short.txt results/abundance_t2d_long-t2d_short__d-disease__l-svm -d 1:disease:t2d -l svm -w
+python classification.py data/abundance_t2d_long-t2d_short.txt results/abundance_t2d_long-t2d_short__d-disease__l-svm__b -d 1:disease:t2d -l svm -b -w
+python classification.py data/abundance_t2d_long-t2d_short.txt results/abundance_t2d_long-t2d_short__d-disease__l-lasso -d 1:disease:t2d -l lasso -w
+python classification.py data/abundance_t2d_long-t2d_short.txt results/abundance_t2d_long-t2d_short__d-disease__l-lasso__b -d 1:disease:t2d -l lasso -b -w
+python classification.py data/abundance_t2d_long-t2d_short.txt results/abundance_t2d_long-t2d_short__d-disease__l-enet -d 1:disease:t2d -l enet -w
+python classification.py data/abundance_t2d_long-t2d_short.txt results/abundance_t2d_long-t2d_short__d-disease__l-enet__b -d 1:disease:t2d -l enet -b -w
+python classification.py data/abundance_t2d_long-t2d_short.txt results/abundance_t2d_long-t2d_short__d-disease__l-rf__i-lasso -d 1:disease:t2d -i lasso -w
+python classification.py data/abundance_t2d_long-t2d_short.txt results/abundance_t2d_long-t2d_short__d-disease__l-rf__i-lasso__b -d 1:disease:t2d -i lasso -b -w
+python classification.py data/abundance_t2d_long-t2d_short.txt results/abundance_t2d_long-t2d_short__d-disease__l-svm__i-lasso -d 1:disease:t2d -l svm -i lasso -w
+python classification.py data/abundance_t2d_long-t2d_short.txt results/abundance_t2d_long-t2d_short__d-disease__l-svm__i-lasso__b -d 1:disease:t2d -l svm -i lasso -b -w
+python classification.py data/abundance_t2d_long-t2d_short.txt results/abundance_t2d_long-t2d_short__d-disease__l-rf__i-enet -d 1:disease:t2d -i enet -w
+python classification.py data/abundance_t2d_long-t2d_short.txt results/abundance_t2d_long-t2d_short__d-disease__l-rf__i-enet__b -d 1:disease:t2d -i enet -b -w
+python classification.py data/abundance_t2d_long-t2d_short.txt results/abundance_t2d_long-t2d_short__d-disease__l-svm__i-enet -d 1:disease:t2d -l svm -i enet -w
+python classification.py data/abundance_t2d_long-t2d_short.txt results/abundance_t2d_long-t2d_short__d-disease__l-svm__i-enet__b -d 1:disease:t2d -l svm -i enet -b -w
+#WT2D
+python classification.py data/abundance_WT2D.txt results/abundance_WT2D__d-disease__l-rf -d 1:disease:t2d -w
+python classification.py data/abundance_WT2D.txt results/abundance_WT2D__d-disease__l-rf__b -d 1:disease:t2d -b -w
+python classification.py data/abundance_WT2D.txt results/abundance_WT2D__d-disease__l-svm -d 1:disease:t2d -l svm -w
+python classification.py data/abundance_WT2D.txt results/abundance_WT2D__d-disease__l-svm__b -d 1:disease:t2d -l svm -b -w
+python classification.py data/abundance_WT2D.txt results/abundance_WT2D__d-disease__l-lasso -d 1:disease:t2d -l lasso -w
+python classification.py data/abundance_WT2D.txt results/abundance_WT2D__d-disease__l-lasso__b -d 1:disease:t2d -l lasso -b -w
+python classification.py data/abundance_WT2D.txt results/abundance_WT2D__d-disease__l-enet -d 1:disease:t2d -l enet -w
+python classification.py data/abundance_WT2D.txt results/abundance_WT2D__d-disease__l-enet__b -d 1:disease:t2d -l enet -b -w
+python classification.py data/abundance_WT2D.txt results/abundance_WT2D__d-disease__l-rf__i-lasso -d 1:disease:t2d -i lasso -w
+python classification.py data/abundance_WT2D.txt results/abundance_WT2D__d-disease__l-rf__i-lasso__b -d 1:disease:t2d -i lasso -b -w
+python classification.py data/abundance_WT2D.txt results/abundance_WT2D__d-disease__l-svm__i-lasso -d 1:disease:t2d -l svm -i lasso -w
+python classification.py data/abundance_WT2D.txt results/abundance_WT2D__d-disease__l-svm__i-lasso__b -d 1:disease:t2d -l svm -i lasso -b -w
+python classification.py data/abundance_WT2D.txt results/abundance_WT2D__d-disease__l-rf__i-enet -d 1:disease:t2d -i enet -w
+python classification.py data/abundance_WT2D.txt results/abundance_WT2D__d-disease__l-rf__i-enet__b -d 1:disease:t2d -i enet -b -w
+python classification.py data/abundance_WT2D.txt results/abundance_WT2D__d-disease__l-svm__i-enet -d 1:disease:t2d -l svm -i enet -w
+python classification.py data/abundance_WT2D.txt results/abundance_WT2D__d-disease__l-svm__i-enet__b -d 1:disease:t2d -l svm -i enet -b -w
+
+##CV AND TRANSFER BETWEEN STAGES
+#CIRRHOSIS
+python classification.py data/abundance_cirrhosis--stagediscovery.txt results/abundance_cirrhosis--stagediscovery__d-disease__l-rf -d 1:disease:cirrhosis -w
+python classification.py data/abundance_cirrhosis--stagediscovery.txt results/abundance_cirrhosis--stagediscovery__d-disease__l-svm -d 1:disease:cirrhosis -l svm -w
+
+python classification.py data/abundance_cirrhosis--stagevalidation.txt results/abundance_cirrhosis--stagevalidation__d-disease__l-rf -d 1:disease:cirrhosis -w
+python classification.py data/abundance_cirrhosis--stagevalidation.txt results/abundance_cirrhosis--stagevalidation__d-disease__l-svm -d 1:disease:cirrhosis -l svm -w
+
+python classification.py data/abundance_cirrhosis.txt results/abundance_cirrhosis__d-disease__t-validation__l-rf -d 1:disease:cirrhosis -t stage:validation -w
+python classification.py data/abundance_cirrhosis.txt results/abundance_cirrhosis__d-disease__t-validation__l-svm -d 1:disease:cirrhosis -l svm -t stage:validation -w
+
+python classification.py data/abundance_cirrhosis.txt results/abundance_cirrhosis__d-disease__t-discovery__l-rf -d 1:disease:cirrhosis -t stage:discovery -w
+python classification.py data/abundance_cirrhosis.txt results/abundance_cirrhosis__d-disease__t-discovery__l-svm -d 1:disease:cirrhosis -l svm -t stage:discovery -w
+#T2D+WT2D
+python classification.py data/abundance_t2d_long-t2d_short--stagei.txt results/abundance_t2d_long-t2d_short--stagei__d-disease__l-rf -d 1:disease:t2d -w
+python classification.py data/abundance_t2d_long-t2d_short--stagei.txt results/abundance_t2d_long-t2d_short--stagei__d-disease__l-svm -d 1:disease:t2d -l svm -w
+
+python classification.py data/abundance_t2d_long-t2d_short--stageii.txt results/abundance_t2d_long-t2d_short--stageii__d-disease__l-rf -d 1:disease:t2d -w
+python classification.py data/abundance_t2d_long-t2d_short--stageii.txt results/abundance_t2d_long-t2d_short--stageii__d-disease__l-svm -d 1:disease:t2d -l svm -w
+
+python classification.py data/abundance_t2d_long-t2d_short.txt results/abundance_t2d_long-t2d_short__d-disease__t-stageii__l-rf -d 1:disease:t2d -t stage:stage_ii -w
+python classification.py data/abundance_t2d_long-t2d_short.txt results/abundance_t2d_long-t2d_short__d-disease__t-stageii__l-svm -d 1:disease:t2d -l svm -t stage:stage_ii -w
+
+python classification.py data/abundance_t2d_long-t2d_short.txt results/abundance_t2d_long-t2d_short__d-disease__t-stagei__l-rf -d 1:disease:t2d -t stage:stage_i -w
+python classification.py data/abundance_t2d_long-t2d_short.txt results/abundance_t2d_long-t2d_short__d-disease__t-stagei__l-svm -d 1:disease:t2d -l svm -t stage:stage_i -w
+
+python classification.py data/abundance_t2d_long-t2d_short-WT2D.txt results/abundance_t2d_long-t2d_short-WT2D__d-disease__l-rf -d 1:disease:t2d -w
+python classification.py data/abundance_t2d_long-t2d_short-WT2D.txt results/abundance_t2d_long-t2d_short-WT2D__d-disease__l-svm -d 1:disease:t2d -l svm -w
+
+python classification.py data/abundance_t2d_long-t2d_short-WT2D.txt results/abundance_t2d_long-t2d_short-WT2D__d-disease__t-WT2D__l-rf -d 1:disease:t2d -t dataset_name:WT2D -w
+python classification.py data/abundance_t2d_long-t2d_short-WT2D.txt results/abundance_t2d_long-t2d_short-WT2D__d-disease__t-WT2D__l-svm -d 1:disease:t2d -l svm -t dataset_name:WT2D -w
+
+python classification.py data/abundance_t2d_long-t2d_short-WT2D.txt results/abundance_t2d_long-t2d_short-WT2D__d-disease__t-t2d_long-t2d_short__l-rf -d 1:disease:t2d -t dataset_name:t2dmeta_long:t2dmeta_short -w
+python classification.py data/abundance_t2d_long-t2d_short-WT2D.txt results/abundance_t2d_long-t2d_short-WT2D__d-disease__t-t2d_long-t2d_short__l-svm -d 1:disease:t2d -l svm -t dataset_name:t2dmeta_long:t2dmeta_short -w
+
+python classification.py data/abundance_t2d_long-t2d_short--stagei-WT2D.txt results/abundance_t2d_long-t2d_short--stagei-WT2D__d-disease__t-WT2D__l-rf -d 1:disease:t2d -t dataset_name:WT2D -w
+python classification.py data/abundance_t2d_long-t2d_short--stagei-WT2D.txt results/abundance_t2d_long-t2d_short--stagei-WT2D__d-disease__t-WT2D__l-svm -d 1:disease:t2d -l svm -t dataset_name:WT2D -w
+
+python classification.py data/abundance_t2d_long-t2d_short--stageii-WT2D.txt results/abundance_t2d_long-t2d_short--stageii-WT2D__d-disease__t-WT2D__l-rf -d 1:disease:t2d -t dataset_name:WT2D -w
+python classification.py data/abundance_t2d_long-t2d_short--stageii-WT2D.txt results/abundance_t2d_long-t2d_short--stageii-WT2D__d-disease__t-WT2D__l-svm -d 1:disease:t2d -l svm -t dataset_name:WT2D -w
+
+python classification.py data/abundance_t2d_long-t2d_short--stagei-WT2D.txt results/abundance_t2d_long-t2d_short--stagei-WT2D__d-disease__t-t2d_long-t2d_short__l-rf -d 1:disease:t2d -t dataset_name:t2dmeta_long:t2dmeta_short -w
+python classification.py data/abundance_t2d_long-t2d_short--stagei-WT2D.txt results/abundance_t2d_long-t2d_short--stagei-WT2D__d-disease__t-t2d_long-t2d_short__l-svm -d 1:disease:t2d -l svm -t dataset_name:t2dmeta_long:t2dmeta_short -w
+
+python classification.py data/abundance_t2d_long-t2d_short--stageii-WT2D.txt results/abundance_t2d_long-t2d_short--stageii-WT2D__d-disease__t-t2d_long-t2d_short__l-rf -d 1:disease:t2d -t dataset_name:t2dmeta_long:t2dmeta_short -w
+python classification.py data/abundance_t2d_long-t2d_short--stageii-WT2D.txt results/abundance_t2d_long-t2d_short--stageii-WT2D__d-disease__t-t2d_long-t2d_short__l-svm -d 1:disease:t2d -l svm -t dataset_name:t2dmeta_long:t2dmeta_short -w
+#OTHERS, T2D CLASSIFICATION
+python classification.py data/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d.txt results/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d__d-disease__l-rf__u-subjectID -d 1:disease:t2d -u subjectID -w
+python classification.py data/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d.txt results/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d__d-disease__l-svm__u-subjectID -d 1:disease:t2d -l svm -u subjectID -w
+
+python classification.py data/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d.txt results/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d__d-disease__t-cirrhosis__l-rf -d 1:disease:t2d -t dataset_name:Quin_gut_liver_cirrhosis -w
+python classification.py data/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d.txt results/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d__d-disease__t-cirrhosis__l-svm -d 1:disease:t2d -l svm -t dataset_name:Quin_gut_liver_cirrhosis -w
+
+python classification.py data/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d.txt results/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d__d-disease__t-colorectal__l-rf -d 1:disease:t2d -t dataset_name:Zeller_fecal_colorectal_cancer -w
+python classification.py data/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d.txt results/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d__d-disease__t-colorectal__l-svm -d 1:disease:t2d -l svm -t dataset_name:Zeller_fecal_colorectal_cancer -w
+
+python classification.py data/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d.txt results/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d__d-disease__t-hmp-hmpii__l-rf -d 1:disease:t2d -t dataset_name:hmp:hmpii -w
+python classification.py data/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d.txt results/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d__d-disease__t-hmp-hmpii__l-svm -d 1:disease:t2d -l svm -t dataset_name:hmp:hmpii -w
+
+python classification.py data/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d.txt results/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d__d-disease__t-ibd__l-rf -d 1:disease:t2d -t dataset_name:metahit -w
+python classification.py data/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d.txt results/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d__d-disease__t-ibd__l-svm -d 1:disease:t2d -l svm -t dataset_name:metahit -w
+
+python classification.py data/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d.txt results/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d__d-disease__t-t2d_long-t2d_short__l-rf -d 1:disease:t2d -t dataset_name:t2dmeta_long:t2dmeta_short -w
+python classification.py data/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d.txt results/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d__d-disease__t-t2d_long-t2d_short__l-svm -d 1:disease:t2d -l svm -t dataset_name:t2dmeta_long:t2dmeta_short -w
+
+python classification.py data/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d.txt results/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d__d-disease__t-t2d_long-t2d_short-stagei__l-rf -d 1:disease:t2d -t stage:stage_i -w
+python classification.py data/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d.txt results/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d__d-disease__t-t2d_long-t2d_short-stagei__l-svm -d 1:disease:t2d -l svm -t stage:stage_i -w
+
+python classification.py data/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d.txt results/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d__d-disease__t-t2d_long-t2d_short-stageii__l-rf -d 1:disease:t2d -t stage:stage_ii -w
+python classification.py data/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d.txt results/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d__d-disease__t-t2d_long-t2d_short-stageii__l-svm -d 1:disease:t2d -l svm -t stage:stage_ii -w
+
+python classification.py data/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d.txt results/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d__d-disease__t-WT2D__l-rf -d 1:disease:t2d -t dataset_name:WT2D -w
+python classification.py data/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d.txt results/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool--disease-n-t2d__d-disease__t-WT2D__l-svm -d 1:disease:t2d -l svm -t dataset_name:WT2D -w
+#OTHERS, DISEASE CLASSIFICATION
+python classification.py data/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool.txt results/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool__d-disease__l-rf__u-subjectID -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease:cirrhosis:t2d:cancer -u subjectID -w
+python classification.py data/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool.txt results/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool__d-disease__l-svm__u-subjectID -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease:cirrhosis:t2d:cancer -l svm -u subjectID -w
+
+python classification.py data/abundance_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool.txt results/abundance_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool__d-disease__l-rf__u-subjectID -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease:cirrhosis:t2d:cancer -u subjectID -w
+python classification.py data/abundance_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool.txt results/abundance_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool__d-disease__l-svm__u-subjectID -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease:cirrhosis:t2d:cancer -l svm -u subjectID -w
+
+python classification.py data/abundance_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool.txt results/abundance_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool__d-disease__t-cirrhosis__l-rf__u-subjectID -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease:cirrhosis:t2d:cancer -t dataset_name:Quin_gut_liver_cirrhosis -u subjectID -w
+python classification.py data/abundance_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool.txt results/abundance_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool__d-disease__t-cirrhosis__l-svm__u-subjectID -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease:cirrhosis:t2d:cancer -l svm -t dataset_name:Quin_gut_liver_cirrhosis -u subjectID -w
+
+python classification.py data/abundance_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool.txt results/abundance_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool__d-disease__t-colorectal__l-rf__u-subjectID -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease:cirrhosis:t2d:cancer -t dataset_name:Zeller_fecal_colorectal_cancer -u subjectID -w
+python classification.py data/abundance_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool.txt results/abundance_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool__d-disease__t-colorectal__l-svm__u-subjectID -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease:cirrhosis:t2d:cancer -l svm -t dataset_name:Zeller_fecal_colorectal_cancer -u subjectID -w
+
+python classification.py data/abundance_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool.txt results/abundance_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool__d-disease__t-ibd__l-rf__u-subjectID -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease:cirrhosis:t2d:cancer -t dataset_name:metahit -u subjectID -w
+python classification.py data/abundance_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool.txt results/abundance_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool__d-disease__t-ibd__l-svm__u-subjectID -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease:cirrhosis:t2d:cancer -l svm -t dataset_name:metahit -u subjectID -w
+
+python classification.py data/abundance_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool.txt results/abundance_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool__d-disease__t-t2d_long-t2d_short__l-rf__u-subjectID -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease:cirrhosis:t2d:cancer -t dataset_name:t2dmeta_long:t2dmeta_short -u subjectID -w
+python classification.py data/abundance_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool.txt results/abundance_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool__d-disease__t-t2d_long-t2d_short__l-svm__u-subjectID -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease:cirrhosis:t2d:cancer -l svm -t dataset_name:t2dmeta_long:t2dmeta_short -u subjectID -w
+
+python classification.py data/abundance_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool.txt results/abundance_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool__d-disease__t-t2d_long-t2d_short-stagei__l-rf__u-subjectID -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease:cirrhosis:t2d:cancer -t stage:stage_i -u subjectID -w
+python classification.py data/abundance_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool.txt results/abundance_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool__d-disease__t-t2d_long-t2d_short-stagei__l-svm__u-subjectID -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease:cirrhosis:t2d:cancer -l svm -t stage:stage_i -u subjectID -w
+
+python classification.py data/abundance_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool.txt results/abundance_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool__d-disease__t-t2d_long-t2d_short-stageii__l-rf__u-subjectID -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease:cirrhosis:t2d:cancer -t stage:stage_ii -u subjectID -w
+python classification.py data/abundance_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool.txt results/abundance_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool__d-disease__t-t2d_long-t2d_short-stageii__l-svm__u-subjectID -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease:cirrhosis:t2d:cancer -l svm -t stage:stage_ii -u subjectID -w
+
+python classification.py data/abundance_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool.txt results/abundance_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool__d-disease__t-WT2D__l-rf__u-subjectID -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease:cirrhosis:t2d:cancer -t dataset_name:WT2D -u subjectID -w
+python classification.py data/abundance_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool.txt results/abundance_ibd-cirrhosis-t2d_long-t2d_short-WT2D-colorectal--bodysite-stool__d-disease__t-WT2D__l-svm__u-subjectID -d 1:disease:ibd_ulcerative_colitis:ibd_crohn_disease:cirrhosis:t2d:cancer -l svm -t dataset_name:WT2D -u subjectID -w
+
+###BODYSITE
+python classification.py data/abundance_hmp-hmpii.txt results/abundance_hmp-hmpii__d-bodysite__l-rf__u-subjectID -d 1:bodysite:stool,2:bodysite:anterior_nares,3:bodysite:l_retroauricular_crease:r_retroauricular_crease,4:bodysite:mid_vagina:posterior_fornix:vaginal_introitus -r 3 -u subjectID -w
+python classification.py data/abundance_hmp-hmpii.txt results/abundance_hmp-hmpii__d-bodysite__l-svm__u-subjectID -d 1:bodysite:stool,2:bodysite:anterior_nares,3:bodysite:l_retroauricular_crease:r_retroauricular_crease,4:bodysite:mid_vagina:posterior_fornix:vaginal_introitus -r 3 -l svm -u subjectID -w
+python classification.py data/abundance_hmp-hmpii.txt results/abundance_hmp-hmpii__d-bodysite__l-rf__u-subjectID-bodysite -d 1:bodysite:stool,2:bodysite:anterior_nares,3:bodysite:l_retroauricular_crease:r_retroauricular_crease,4:bodysite:mid_vagina:posterior_fornix:vaginal_introitus -r 3 -u subjectID:bodysite -w
+python classification.py data/abundance_hmp-hmpii.txt results/abundance_hmp-hmpii__d-bodysite__l-svm__u-subjectID-bodysite -d 1:bodysite:stool,2:bodysite:anterior_nares,3:bodysite:l_retroauricular_crease:r_retroauricular_crease,4:bodysite:mid_vagina:posterior_fornix:vaginal_introitus -r 3 -l svm -u subjectID:bodysite -w
+
+###GENDER
+##CV ON SINGLE DATASET
+python classification.py data/abundance_hmp-hmpii.txt results/abundance_hmp-hmpii__d-gender__l-rf__u-subjectID -r 5 -d 1:gender:male -u subjectID -w
+python classification.py data/abundance_hmp-hmpii.txt results/abundance_hmp-hmpii__d-gender__l-rf__u-subjectID__b -r 5 -d 1:gender:male -u subjectID -b -w
+python classification.py data/abundance_hmp-hmpii.txt results/abundance_hmp-hmpii__d-gender__l-svm__u-subjectID -r 5 -d 1:gender:male -u subjectID -l svm -w
+python classification.py data/abundance_hmp-hmpii.txt results/abundance_hmp-hmpii__d-gender__l-svm__u-subjectID__b -r 5 -d 1:gender:male -u subjectID -b -l svm -w
+
+python classification.py data/abundance_ibd.txt results/abundance_ibd__d-gender__l-rf -r 5 -d 1:gender:male -w
+python classification.py data/abundance_ibd.txt results/abundance_ibd__d-gender__l-rf__b -r 5 -d 1:gender:male -b -w
+python classification.py data/abundance_ibd.txt results/abundance_ibd__d-gender__l-svm -r 5 -d 1:gender:male -l svm -w
+python classification.py data/abundance_ibd.txt results/abundance_ibd__d-gender__l-svm__b -r 5 -d 1:gender:male -b -l svm -w
+
+python classification.py data/abundance_cirrhosis.txt results/abundance_cirrhosis__d-gender__l-rf -r 5 -d 1:gender:male -w
+python classification.py data/abundance_cirrhosis.txt results/abundance_cirrhosis__d-gender__l-rf__b -r 5 -d 1:gender:male -b -w
+python classification.py data/abundance_cirrhosis.txt results/abundance_cirrhosis__d-gender__l-svm -r 5 -d 1:gender:male -l svm -w
+python classification.py data/abundance_cirrhosis.txt results/abundance_cirrhosis__d-gender__l-svm__b -r 5 -d 1:gender:male -b -l svm -w
+
+python classification.py data/abundance_skin.txt results/abundance_skin__d-gender__l-rf__u-subjectID -r 5 -d 1:gender:male -u subjectID -w
+python classification.py data/abundance_skin.txt results/abundance_skin__d-gender__l-rf__u-subjectID__b -r 5 -d 1:gender:male -u subjectID -b -w
+python classification.py data/abundance_skin.txt results/abundance_skin__d-gender__l-svm__u-subjectID -r 5 -d 1:gender:male -u subjectID -l svm -w
+python classification.py data/abundance_skin.txt results/abundance_skin__d-gender__l-svm__u-subjectID__b -r 5 -d 1:gender:male -u subjectID -b -l svm -w
+
+python classification.py data/abundance_t2d_long-t2d_short.txt results/abundance_t2d_long-t2d_short__d-gender__l-rf -r 5 -d 1:gender:male -w
+python classification.py data/abundance_t2d_long-t2d_short.txt results/abundance_t2d_long-t2d_short__d-gender__l-rf__b -r 5 -d 1:gender:male -b -w
+python classification.py data/abundance_t2d_long-t2d_short.txt results/abundance_t2d_long-t2d_short__d-gender__l-svm -r 5 -d 1:gender:male -l svm -w
+python classification.py data/abundance_t2d_long-t2d_short.txt results/abundance_t2d_long-t2d_short__d-gender__l-svm__b -r 5 -d 1:gender:male -b -l svm -w
+
+python classification.py data/abundance_colorectal--group.txt results/abundance_colorectal--group__d-gender__l-rf -r 5 -d 1:gender:male -w
+python classification.py data/abundance_colorectal--group.txt results/abundance_colorectal--group__d-gender__l-rf__b -r 5 -d 1:gender:male -b -w
+python classification.py data/abundance_colorectal--group.txt results/abundance_colorectal--group__d-gender__l-svm -r 5 -d 1:gender:male -l svm -w
+python classification.py data/abundance_colorectal--group.txt results/abundance_colorectal--group__d-gender__l-svm__b -r 5 -d 1:gender:male -b -l svm -w
+##TRANSFER BETWEEN STAGES
+python classification.py data/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool.txt results/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool__d-gender__t-hmp-hmpii__l-rf -r 1 -d 1:gender:male -t dataset_name:hmp:hmpii -w
+python classification.py data/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool.txt results/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool__d-gender__t-hmp-hmpii__l-svm -r 1 -d 1:gender:male -t dataset_name:hmp:hmpii -l svm -w
+python classification.py data/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool--disease-n.txt results/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool--disease-n__d-gender__t-hmp-hmpii__l-rf -r 1 -d 1:gender:male -t dataset_name:hmp:hmpii -w
+python classification.py data/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool--disease-n.txt results/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool--disease-n__d-gender__t-hmp-hmpii__l-svm -r 1 -d 1:gender:male -t dataset_name:hmp:hmpii -l svm -w
+
+python classification.py data/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool.txt results/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool__d-gender__t-ibd__l-rf -r 1 -d 1:gender:male -t dataset_name:metahit -w
+python classification.py data/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool.txt results/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool__d-gender__t-ibd__l-svm -r 1 -d 1:gender:male -t dataset_name:metahit -l svm -w
+python classification.py data/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool--disease-n.txt results/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool--disease-n__d-gender__t-ibd__l-rf -r 1 -d 1:gender:male -t dataset_name:metahit -w
+python classification.py data/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool--disease-n.txt results/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool--disease-n__d-gender__t-ibd__l-svm -r 1 -d 1:gender:male -t dataset_name:metahit -l svm -w
+
+python classification.py data/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool.txt results/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool__d-gender__t-cirrhosis__l-rf -r 1 -d 1:gender:male -t dataset_name:Quin_gut_liver_cirrhosis -w
+python classification.py data/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool.txt results/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool__d-gender__t-cirrhosis__l-svm -r 1 -d 1:gender:male -t dataset_name:Quin_gut_liver_cirrhosis -l svm -w
+python classification.py data/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool--disease-n.txt results/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool--disease-n__d-gender__t-cirrhosis__l-rf -r 1 -d 1:gender:male -t dataset_name:Quin_gut_liver_cirrhosis -w
+python classification.py data/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool--disease-n.txt results/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool--disease-n__d-gender__t-cirrhosis__l-svm -r 1 -d 1:gender:male -t dataset_name:Quin_gut_liver_cirrhosis -l svm -w
+
+python classification.py data/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool.txt results/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool__d-gender__t-t2d_long-t2d_short__l-rf -r 1 -d 1:gender:male -t dataset_name:t2dmeta_long:t2dmeta_short -w
+python classification.py data/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool.txt results/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool__d-gender__t-t2d_long-t2d_short__l-svm -r 1 -d 1:gender:male -t dataset_name:t2dmeta_long:t2dmeta_short -l svm -w
+python classification.py data/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool--disease-n.txt results/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool--disease-n__d-gender__t-t2d_long-t2d_short__l-rf -r 1 -d 1:gender:male -t dataset_name:t2dmeta_long:t2dmeta_short -w
+python classification.py data/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool--disease-n.txt results/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool--disease-n__d-gender__t-t2d_long-t2d_short__l-svm -r 1 -d 1:gender:male -t dataset_name:t2dmeta_long:t2dmeta_short -l svm -w
+
+python classification.py data/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool.txt results/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool__d-gender__t-colorectal__l-rf -r 1 -d 1:gender:male -t dataset_name:Zeller_fecal_colorectal_cancer -w
+python classification.py data/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool.txt results/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool__d-gender__t-colorectal__l-svm -r 1 -d 1:gender:male -t dataset_name:Zeller_fecal_colorectal_cancer -l svm -w
+python classification.py data/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool--disease-n.txt results/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool--disease-n__d-gender__t-colorectal__l-rf -r 1 -d 1:gender:male -t dataset_name:Zeller_fecal_colorectal_cancer -w
+python classification.py data/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool--disease-n.txt results/abundance_hmp-hmpii-ibd-cirrhosis-t2d_long-t2d_short-colorectal--bodysite-stool--disease-n__d-gender__t-colorectal__l-svm -r 1 -d 1:gender:male -t dataset_name:Zeller_fecal_colorectal_cancer -l svm -w

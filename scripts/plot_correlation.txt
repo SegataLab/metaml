@@ -1,0 +1,7 @@
+###DISEASE
+python tools/plot_correlation.py results/abundance_cirrhosis__d-disease__l-rf.txt data/abundance_cirrhosis.txt results/abundance_cirrhosis__d-disease__l-rf_correlation.svg -t "Cirrhosis dataset"
+python tools/plot_correlation.py results/abundance_colorectal--group__d-disease__l-rf.txt data/abundance_colorectal--group.txt results/abundance_colorectal--group__d-disease__l-rf_correlation.svg -t "Colorectal dataset"
+python tools/plot_correlation.py results/abundance_ibd__d-disease__l-rf.txt data/abundance_ibd.txt results/abundance_ibd__d-disease__l-rf_correlation.svg -t "IBD dataset"
+python tools/plot_correlation.py results/abundance_obesity__d-disease__l-rf.txt data/abundance_obesity.txt results/abundance_obesity__d-disease__l-rf_correlation.svg -t "Obesity dataset"
+python tools/plot_correlation.py results/abundance_t2d_long-t2d_short__d-disease__l-rf.txt data/abundance_t2d_long-t2d_short.txt results/abundance_t2d_long-t2d_short__d-disease__l-rf_correlation.svg -t "T2D dataset"
+python tools/plot_correlation.py results/abundance_WT2D__d-disease__l-rf.txt data/abundance_WT2D.txt results/abundance_WT2D__d-disease__l-rf_correlation.svg -t "WT2D dataset"
