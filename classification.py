@@ -324,7 +324,7 @@ if __name__ == "__main__":
 			fi[j] = compute_feature_importance(ElasticNetCV(alphas=lp.fs_grid[0], l1_ratio=lp.fs_grid[1], cv=lp.cv_folds, n_jobs=-1).fit(f.loc[i_tr[j] & i_u[j/runs_cv_folds], fi[j].feat_sel].values, l[i_tr[j] & i_u[j/runs_cv_folds]].values.flatten().astype('int')), feat, fi[j].feat_sel, lp.feature_selection)			
 
 		if lp.learner_type == 'rf':
-			clf.append(RandomForestClassifier(n_estimators=500, max_depth=None, min_samples_split=1, n_jobs=-1).fit(f.loc[i_tr[j] & i_u[j/runs_cv_folds], fi[j].feat_sel].values, l[i_tr[j] & i_u[j/runs_cv_folds]].values.flatten().astype('int')))			
+			clf.append(RandomForestClassifier(n_estimators=500, max_depth=None, min_samples_split=2, n_jobs=-1).fit(f.loc[i_tr[j] & i_u[j/runs_cv_folds], fi[j].feat_sel].values, l[i_tr[j] & i_u[j/runs_cv_folds]].values.flatten().astype('int')))			
 		elif lp.learner_type == 'svm':
 			clf.append(GridSearchCV(SVC(C=1, probability=True), lp.cv_grid, cv=StratifiedKFold(l.iloc[i_tr[j] & i_u[j/runs_cv_folds],0], lp.cv_folds, shuffle=True), scoring=lp.cv_scoring).fit(f.loc[i_tr[j] & i_u[j/runs_cv_folds], fi[j].feat_sel].values, l[i_tr[j] & i_u[j/runs_cv_folds]].values.flatten().astype('int')))
 		elif lp.learner_type == 'lasso':
@@ -349,7 +349,7 @@ if __name__ == "__main__":
 			p_es_f = []
 			l_es_f = []
 			for j in range(runs_n*runs_cv_folds):
-				clf_f.append(RandomForestClassifier(n_estimators=500, max_depth=None, min_samples_split=1, n_jobs=-1).fit(f.loc[i_tr[j] & i_u[j/runs_cv_folds], fi_f[j].feat_sel[:k]].values, l[i_tr[j] & i_u[j/runs_cv_folds]].values.flatten().astype('int')))
+				clf_f.append(RandomForestClassifier(n_estimators=500, max_depth=None, min_samples_split=2, n_jobs=-1).fit(f.loc[i_tr[j] & i_u[j/runs_cv_folds], fi_f[j].feat_sel[:k]].values, l[i_tr[j] & i_u[j/runs_cv_folds]].values.flatten().astype('int')))
 				p_es_f.append(pd.DataFrame(clf_f[j].predict_proba(f.loc[-i_tr[j] & i_u[j/runs_cv_folds], fi_f[j].feat_sel[:k]].values)))
 				l_es_f.append(pd.DataFrame([list(p_es_f[j].iloc[i,:]).index(max(p_es_f[j].iloc[i,:])) for i in range(len(p_es_f[j]))]))
 			cm_f = save_results(l, l_es_f, p_es_f, i_tr, i_u, k, runs_n, runs_cv_folds)
