@@ -130,7 +130,7 @@ def save_results(l, l_es, p_es, i_tr, i_u, nf, runs_n, runs_cv_folds):
 			fidoutroc.write('#features\t' + str(nf) + '\n')	
 
 	for j in range(runs_n*runs_cv_folds):
-		l_ = pd.DataFrame([l.loc[i] for i in l[-i_tr[j] & i_u[j/runs_cv_folds]].index]).values.flatten().astype('int')
+		l_ = pd.DataFrame([l.loc[i] for i in l[~i_tr[j] & i_u[j/runs_cv_folds]].index]).values.flatten().astype('int')
 		l_es_ = l_es[j].values.flatten().astype('int')
 		if (lp.learner_type == 'rf') | (lp.learner_type == 'svm'):
 			p_es_pos_ = p_es[j].loc[:,1].values
@@ -332,10 +332,10 @@ if __name__ == "__main__":
 		elif lp.learner_type == 'enet':
 			clf.append(ElasticNetCV(alphas=lp.cv_grid[0], l1_ratio=lp.cv_grid[1], cv=lp.cv_folds, n_jobs=-1).fit(f.loc[i_tr[j] & i_u[j/runs_cv_folds], fi[j].feat_sel].values, l[i_tr[j] & i_u[j/runs_cv_folds]].values.flatten().astype('int')))
 		if (lp.learner_type == 'rf') | (lp.learner_type == 'svm'):
-			p_es.append(pd.DataFrame(clf[j].predict_proba(f.loc[-i_tr[j] & i_u[j/runs_cv_folds], fi[j].feat_sel].values)))
+			p_es.append(pd.DataFrame(clf[j].predict_proba(f.loc[~i_tr[j] & i_u[j/runs_cv_folds], fi[j].feat_sel].values)))
 			l_es.append(pd.DataFrame([list(p_es[j].iloc[i,:]).index(max(p_es[j].iloc[i,:])) for i in range(len(p_es[j]))]))
 		else:
-			p_es.append(pd.DataFrame(clf[j].predict(f.loc[-i_tr[j] & i_u[j/runs_cv_folds], fi[j].feat_sel].values)))
+			p_es.append(pd.DataFrame(clf[j].predict(f.loc[~i_tr[j] & i_u[j/runs_cv_folds], fi[j].feat_sel].values)))
 			l_es.append(pd.DataFrame([int(p_es[j].iloc[i]>0.5) for i in range(len(p_es[j]))]))
 		
 	cm = save_results(l, l_es, p_es, i_tr, i_u, len(feat), runs_n, runs_cv_folds)
@@ -350,7 +350,7 @@ if __name__ == "__main__":
 			l_es_f = []
 			for j in range(runs_n*runs_cv_folds):
 				clf_f.append(RandomForestClassifier(n_estimators=500, max_depth=None, min_samples_split=2, n_jobs=-1).fit(f.loc[i_tr[j] & i_u[j/runs_cv_folds], fi_f[j].feat_sel[:k]].values, l[i_tr[j] & i_u[j/runs_cv_folds]].values.flatten().astype('int')))
-				p_es_f.append(pd.DataFrame(clf_f[j].predict_proba(f.loc[-i_tr[j] & i_u[j/runs_cv_folds], fi_f[j].feat_sel[:k]].values)))
+				p_es_f.append(pd.DataFrame(clf_f[j].predict_proba(f.loc[~i_tr[j] & i_u[j/runs_cv_folds], fi_f[j].feat_sel[:k]].values)))
 				l_es_f.append(pd.DataFrame([list(p_es_f[j].iloc[i,:]).index(max(p_es_f[j].iloc[i,:])) for i in range(len(p_es_f[j]))]))
 			cm_f = save_results(l, l_es_f, p_es_f, i_tr, i_u, k, runs_n, runs_cv_folds)
 
