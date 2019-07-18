@@ -11,21 +11,39 @@ from scipy import interpolate
 from sklearn import metrics
 
 class plot_par:
-	dataset_name_prefix = ['abundance_cirrhosis__d-disease__','abundance_colorectal--group__d-disease__','abundance_ibd__d-disease__','abundance_obesity__d-disease__','abundance_t2d_long-t2d_short__d-disease__','abundance_WT2D__d-disease__']
-	dataset_name_prefix_title = ['Cirrhosis','Colorectal','IBD','Obesity','T2D','WT2D']
-	dataset_name_suffix = [['l-rf_estimations.txt','l-rf__b_estimations.txt'],['l-svm_estimations.txt','l-svm__b_estimations.txt']]
+	dataset_name_prefix = [ 'WirbelJ_2018_HMP2_Ulcerative_Colitis'
+			,	'WirbelJ_2018_HMP2_Crohn_Disease'
+			,	'WirbelJ_2018_HMP2_Controls'
+			,	'WirbelJ_2018_Metahit_Ulcerative_Colitis'
+			,	'WirbelJ_2018_Metahit_Crohn_Disease'
+			,	'WirbelJ_2018_Metahit_Controls' ]
+
+		#'abundance_cirrhosis__d-disease__'
+		#,'abundance_colorectal--group__d-disease__'
+		#,'abundance_ibd__d-disease__'
+		#,'abundance_obesity__d-disease__'
+		#,'abundance_t2d_long-t2d_short__d-disease__'
+		#,'abundance_WT2D__d-disease__']
+
+
+	dataset_name_prefix_title = [ 'UC(HMP2)', 'CD(HMP2)', 'CTRL(HMP2)', 'UC(MH)', 'CD(MH)', 'CTRL(MH)' ]
+	dataset_name_suffix = [ [ '_estimations.txt', '_estimations.txt', '_estimations.txt', '_estimations.txt', '_estimations.txt', '_estimations.txt' ] ]
+
+	#,['l-svm_estimations.txt','l-svm__b_estimations.txt']]
+
 	factor = 2.26
-	fig_size = [4, 8]
+	fig_size = [4, 8] if len(dataset_name_suffix)==1 else [4,4]
 	plot_alpha = 0.2
-	plot_color = ['b','g','r','c','m','orange']
+	plot_color = ['b','g','r','c','m','orange','goldenrod']
 	plot_ls = ['-','--']
 	plot_lw = 2
 	plot_marker = ['None','None']
-	plot_title = [[0.5,0.1,'RF'],[0.5,0.1,'SVM']]
+	plot_title = [[0.5,0.1,'Validation Cohort + GI tract Samples']]  #,[0.5,0.1,'SVM']]
 	text_size = 10
 	title = 'ROC curves'
 	x_label = 'False positive rate'
 	y_label = 'True positive rate'
+
 
 def read_params(args):
 	parser = ap.ArgumentParser(description='Plot ROC curves')
@@ -41,6 +59,8 @@ if __name__ == "__main__":
 	nplots = len(plot_par.dataset_name_suffix)
 
 	fig, ax = plt.subplots(nplots, sharex=True, sharey=True)
+        if nplots == 1:
+            ax = [ ax ]
 
 	for k in range(nplots):
 		for i in range(len(plot_par.dataset_name_prefix)):
@@ -57,8 +77,15 @@ if __name__ == "__main__":
 					if not np.isnan(tpr[0]):
 						tpr_i.append(interpolate.interp1d(fpr, tpr, 'nearest')(fpr_all))
 
+                                print ax
+                                print len(plot_par.plot_color), ' lunghezza colori: ', i, ' ( indice colori )'
+                                print plot_par.plot_ls, ' par plot ls, la sua lunghezza:  ', len(plot_par.plot_ls), j, ' la cazzo di j.. ' 
+
+
 				ax[k].fill_between(fpr_all, tpr_all-np.std(tpr_i, axis=0)*plot_par.factor/np.sqrt(par['runs_cv_folds']), tpr_all+np.std(tpr_i, axis=0)*plot_par.factor/np.sqrt(par['runs_cv_folds']), color=plot_par.plot_color[i], lw=0, alpha=plot_par.plot_alpha)
-				ax[k].plot(fpr_all, tpr_all, color=plot_par.plot_color[i], ls=plot_par.plot_ls[j], lw=plot_par.plot_lw, marker=plot_par.plot_marker[j])
+				ax[k].plot(fpr_all, tpr_all, color=plot_par.plot_color[i], ls='-', lw=plot_par.plot_lw, marker=plot_par.plot_marker[0])
+
+				#plot_par.plot_ls[j], lw=plot_par.plot_lw, marker=plot_par.plot_marker[j])
 
 	fig.subplots_adjust(hspace=0)
 	ax[-1].set_xlabel(plot_par.x_label, size=plot_par.text_size)
