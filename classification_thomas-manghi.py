@@ -45,8 +45,8 @@ class class_params:
 		self.cv_scoring = []
 		self.fs_grid = []
 
-		#self.affine = []
-		#self.affine_grid = []
+		#self.refine = []
+		#self.refine_grid = []
 
 
 class feature_importance:
@@ -267,8 +267,8 @@ def set_class_params(args, l):
 	else:
 		lp.learner_type = 'rf'
 
-	lp.affine = par['refine']
-	lp.affine_grid = [{'C': [1,1000], 'kernel':['linear']}, {'C': [1, 1000], 'gamma': [10, 1, 0.1, 0.01, 0.001, 0.0001], 'kernel':['rbf']}]
+	lp.refine = par['refine']
+	lp.refine_grid = [{'C': [1,1000], 'kernel':['linear']}, {'C': [1, 1000], 'gamma': [10, 1, 0.1, 0.01, 0.001, 0.0001], 'kernel':['rbf']}]
 
 	if par ['feature_selection']:
 		lp.feature_selection = par['feature_selection']
@@ -572,10 +572,10 @@ if __name__ == "__main__":
 							l_es_f, p_es_f, i_tr if not par['objective_vector'] else i_tr_ob, \
 							i_u, k, runs_n, runs_cv_folds)
 
-					#elif lp.affine == 'svm':				
+					#elif lp.refine == 'svm':				
 					#	for j in range(runs_n*runs_cv_folds):
 					#		clf_f.append(GridSearchCV(\
-					#			SVC(probability=True, verbose=1), lp.affine_grid, cv=StratifiedKFold(\
+					#			SVC(probability=True, verbose=1), lp.refine_grid, cv=StratifiedKFold(\
                                 	#		l.iloc[i_tr[j] & i_u[j//runs_cv_folds],0], lp.cv_folds, shuffle=True)\
                                 	#			, scoring=lp.cv_scoring, refit=True).fit(f.loc[i_tr[j] & i_u[j//runs_cv_folds]\
 					#			, fi_f[j].feat_sel[:k]].values, l[i_tr[j] & i_u[j//runs_cv_folds]].values.flatten().astype('int')))
