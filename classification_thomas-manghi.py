@@ -528,6 +528,13 @@ if __name__ == "__main__":
 	if par['how_verbose'] > 0:
 		print ('global-time: %.4f sec.' %(global_elapsed))
 
+
+	## from here on, if you used ranfom forest and you didn't specify
+	## disable_features (which is useful in case of huge of very large database)
+	## you have extracted a ranking of the most predictive features which
+	## is averaged over '# folds * # runs' cicles. The testing sets are at
+	## each cycle excluded, so you can use this set of selected features
+	## without worrying
 	if lp.learner_type == 'rf':
 		if not par['disable_features']:
 			fi_f = []
