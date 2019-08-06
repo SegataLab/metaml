@@ -135,7 +135,7 @@ def read_params():
              'which follows std random forest (random forest)')
 	arg( '-cc', '--choose_cut', type=str, default=None, \
 	    help='comma-separated list of numbers which will substitute the std features cuts (10,20,...,150)')
-        arg( '-wc', '--weight_classes', default=None, type=float, nargs=2)
+	arg( '-wc', '--weight_classes', default=None, type=float, nargs=2)
 
 	arg( '-hv','--how_verbose', default=1, type=int, choices=[0,1,2])
 	arg( '-e','--figure_extension', default='png', type=str, help="the extension of output figure\n")
@@ -602,4 +602,3 @@ if __name__ == "__main__":
 		fidout.close()
 		fidoutes.close()
 		fidoutroc.close()
-		fidoutpred.close()
