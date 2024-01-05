@@ -14,6 +14,7 @@ from sklearn import metrics
 from sklearn import preprocessing as prep
 from sklearn.model_selection import StratifiedKFold
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.model_selection import GridSearchCV
 from sklearn.linear_model import LassoCV
 from sklearn.linear_model import ElasticNetCV
@@ -57,7 +58,7 @@ class feature_importance:
 
 def compute_feature_importance(el, feat, feat_sel, ltype):
 	fi = feature_importance(feat, 0.0)
-	if ltype == 'rf':
+	if ltype in ['rf', 'gb']:
 		t = el.feature_importances_
 	elif (ltype == 'lasso') | (ltype == 'enet'):
 		t = abs(el.coef_)/sum(abs(el.coef_))
@@ -112,7 +113,7 @@ def read_params():
 	arg( '-r','--runs_n', default=20, type=int, help="the number of runs\n")
 	arg( '-p','--runs_cv_folds', default=10, type=int, help="the number of cross-validation folds per run\n")
 	arg( '-w','--set_seed', action='store_true', help="setting seed\n")
-	arg( '-l','--learner_type', choices=['rf','lsvm','svm','lasso','enet'], default='rf', help='the type of learner/classifier\n')
+	arg( '-l','--learner_type', choices=['rf','lsvm','svm','lasso','enet','gb'], default='rf', help='the type of learner/classifier\n')
 	arg( '-i','--feature_selection', choices=['lasso','enet'], help="the type of feature selection\n")
 	arg( '-f','--cv_folds', type=int, help="the number of cross-validation folds for model selection\n")
 	arg( '-g','--cv_grid', type=str, help="the parameter grid for model selection\n")
@@ -126,7 +127,7 @@ def read_params():
 	    help='Impurity criterion (random forest)')
 	arg( '-mf','--rf_max_features'\
 	    , choices=['0.001', '0.01', '0.1', '0.2', '0.3', '0.5', '0.4', '0.6', '1.0'\
-	    , '100', 'auto', 'sqrt', '0.33', None, 'log2'], default=0.3, \
+	    , '100', 'auto', 'sqrt', '0.33', None, 'log2','10'], default=0.3, \
 	    help='Feature sample/percentage (random forest)')
 	arg( '-nt','--number_of_trees', type=int, default=1000, help='# of estimator trees (random forest)')
 	arg( '-nsl','--number_sample_per_leaf', type=int, default=1, help='minimum # sample per leaf (random forest)')
@@ -181,7 +182,7 @@ def save_results(l, l_es, p_es, i_tr, i_u, nf, runs_n, runs_cv_folds):
 		l_ = pd.DataFrame([l.loc[i] for i in l[~i_tr[j] & i_u[j//runs_cv_folds]].index]).values.flatten().astype('int')
 
 		l_es_ = l_es[j].values.flatten().astype('int')
-		if (lp.learner_type == 'rf') | (lp.learner_type.endswith('svm')):
+		if (lp.learner_type == 'rf') | (lp.learner_type.endswith('svm')) | (lp.learner_type=='gb'):
 			p_es_pos_ = p_es[j].loc[:,1].values
 		else:
 			p_es_pos_ = p_es[j].loc[:,0].values
@@ -319,7 +320,7 @@ if __name__ == "__main__":
 
 	par = read_params()
  
-	if par['rf_max_features'] in ['0.001', '0.01', '0.1', '0.2', '0.3', '0.4', '0.5', '0.6', '0.33','100', '1.0']:
+	if par['rf_max_features'] in ['0.001', '0.01', '0.1', '0.2', '0.3', '0.4', '0.5', '0.6', '0.33','100','10','1.0']:
 		par['rf_max_features'] = float(par['rf_max_features'])
 
 	f = pd.read_csv(par['inp_f'], sep='\t', header=None, index_col=0 ) #, dtype=unicode)
@@ -408,6 +409,12 @@ if __name__ == "__main__":
 	if par['label_shuffling']:
 		np.random.shuffle(l.values)
 
+	#for s in f.columns:
+		#print(par['feature_identifier'])
+		#print(par['feature_identifier'].split(":"))
+		#print(s, par['feature_identifier'].split(':'), [s2 in s for s2 in par['feature_identifier'].split(':')])
+        #print(par)
+
 	feat = [s for s in f.columns if sum([s2 in s for s2 in par['feature_identifier'].split(':')])>0]
 	if 'unclassified' in f.columns: feat.append('unclassified')
 	f = f.loc[:, feat].astype('float')
@@ -470,6 +477,11 @@ if __name__ == "__main__":
 				, l[i_tr[j] & i_u[j//runs_cv_folds]].values.flatten().astype('int')))	
 
 			else:
+
+				#print(f.shape, " forma di f")
+				#print(i_tr.shape, " forma di i_tr")
+				#print(l.shape, " forma di l")
+
 				clf.append(RandomForestClassifier(\
 					n_estimators=par['number_of_trees']\
 					, criterion=par['rf_criterion']\
@@ -481,6 +493,20 @@ if __name__ == "__main__":
 					, class_weight='balanced').fit(\
                                 f.loc[i_tr[j] & i_u[j//runs_cv_folds], fi[j].feat_sel].values\
                                 , l[i_tr[j] & i_u[j//runs_cv_folds]].values.flatten().astype(int)))
+
+		elif lp.learner_type == "gb":
+                    clf.append(GradientBoostingClassifier(\
+                                        n_estimators=par['number_of_trees']\
+                                        , loss="deviance", learning_rate=0.1 \
+                                        , max_features=par['rf_max_features']\
+                                        , criterion='friedman_mse', max_depth=3\
+                                        , min_samples_split=2 \
+                                        , verbose=par['how_verbose']\
+                                        , min_samples_leaf=par['number_sample_per_leaf']\
+                                        ).fit(\
+                                f.loc[i_tr[j] & i_u[j//runs_cv_folds], fi[j].feat_sel].values\
+                                , l[i_tr[j] & i_u[j//runs_cv_folds]].values.flatten().astype(int)))
+
 
 		elif lp.learner_type.endswith('svm'):
 			clf.append(GridSearchCV(\
@@ -504,7 +530,7 @@ if __name__ == "__main__":
 
 
  
-		if (lp.learner_type == 'rf') | (lp.learner_type.endswith('svm')):                        
+		if (lp.learner_type == 'rf') | (lp.learner_type.endswith('svm')) | (lp.learner_type=='gb'):
 			p_es.append(pd.DataFrame(clf[j].predict_proba(f.loc[~i_tr[j] & i_u[j//runs_cv_folds], fi[j].feat_sel].values)))
 			l_es.append(pd.DataFrame([list(p_es[j].iloc[i,:]).index(max(p_es[j].iloc[i,:])) for i in range(len(p_es[j]))]))
 
@@ -535,7 +561,7 @@ if __name__ == "__main__":
 	## is averaged over '# folds * # runs' cicles. The testing sets are at
 	## each cycle excluded, so you can use this set of selected features
 	## without worrying
-	if lp.learner_type == 'rf':
+	if lp.learner_type in ['rf', 'gb']:
 		if not par['disable_features']:
 			fi_f = []
 			for j in range(runs_n*runs_cv_folds):
@@ -579,6 +605,35 @@ if __name__ == "__main__":
 							l_es_f, p_es_f, i_tr if not par['objective_vector'] else i_tr_ob, \
 							i_u, k, runs_n, runs_cv_folds)
 
+			elif lp.learner_type == 'gb':
+				for k in steps:
+					clf_f = []
+					p_es_f = []
+					l_es_f = []
+
+					for j in range(runs_n*runs_cv_folds):
+						clf_f.append(\
+							GradientBoostingClassifier(\
+                                        		n_estimators=par['number_of_trees']\
+                                        		, loss="deviance", learning_rate=0.1 \
+                                        		, max_features=par['rf_max_features']\
+                                        		, criterion='friedman_mse', max_depth=3\
+                                        		, min_samples_split=2 \
+                                        		, verbose=par['how_verbose']\
+                                        		, min_samples_leaf=par['number_sample_per_leaf']\
+                                        	).fit(\
+                                			f.loc[i_tr[j] & i_u[j//runs_cv_folds], fi_f[j].feat_sel[:k] ].values\
+                                			, l[i_tr[j] & i_u[j//runs_cv_folds]].values.flatten().astype(int)))
+
+						p_es_f.append(pd.DataFrame(clf_f[j].predict_proba(f.loc[~i_tr[j] & i_u[j//runs_cv_folds]\
+                                                                , fi_f[j].feat_sel[:k]].values)))
+						l_es_f.append(pd.DataFrame([list(p_es_f[j].iloc[i,:]).index(max(p_es_f[j].iloc[i,:])) \
+                                                        for i in range(len(p_es_f[j]))]))
+
+					cm_f = save_results(l if not par['objective_vector'] else l_ob, \
+                                                        l_es_f, p_es_f, i_tr if not par['objective_vector'] else i_tr_ob, \
+                                                        i_u, k, runs_n, runs_cv_folds)
+                        
 					#elif lp.refine == 'svm':				
 					#	for j in range(runs_n*runs_cv_folds):
 					#		clf_f.append(GridSearchCV(\
@@ -595,7 +650,7 @@ if __name__ == "__main__":
 			fi_ave = save_average_feature_importance(fi_f, feat)
  
 	if par['out_f']:
-		if lp.learner_type == 'rf':
+		if lp.learner_type in ['rf', 'gb']:
 			if not par['disable_features']:
 				plot_pca(f, l if not par['objective_vector'] else l_ob, fi_ave.feat_sel)
  
