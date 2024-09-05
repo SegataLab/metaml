@@ -1,5 +1,10 @@
 #!/usr/bin/env python
 
+__author__ = ('Edoardo Pasolli (edoardo.pasolli@unina.it), '
+            'Paolo Manghi (paolo.manghi@unitn.it), ')
+__version__ = '1.1'
+__date__ = '05 Aug 2024'
+
 
 import time
 import argparse as ap
@@ -104,9 +109,13 @@ def read_params():
 		, help="the input dataset file [stdin if not present]")
 	arg( 'out_f', metavar='OUTPUT_FILE', nargs='?', default=None, type=str\
 		, help="the output file [stdout if not present]")
+
 	arg( '-z','--feature_identifier', default='k__', type=str, help="the feature identifier\n")
 	arg( '-d','--define', type=str, help="define the classification problem\n")
 	arg( '-t','--target', type=str, help="define the target domain\n")
+
+	arg( '-x','--reinforcement', type=str, help="define the domain to support the cross-validation")
+
 	arg( '-u','--unique', type=str, help="the unique samples to select\n")
 	arg( '-b','--label_shuffling', action='store_true', help="label shuffling\n")
 
@@ -115,13 +124,12 @@ def read_params():
 	arg( '-w','--set_seed', action='store_true', help="setting seed\n")
 	arg( '-l','--learner_type', choices=['rf','lsvm','svm','lasso','enet','gb'], default='rf', help='the type of learner/classifier\n')
 	arg( '-i','--feature_selection', choices=['lasso','enet'], help="the type of feature selection\n")
+
 	arg( '-f','--cv_folds', type=int, help="the number of cross-validation folds for model selection\n")
 	arg( '-g','--cv_grid', type=str, help="the parameter grid for model selection\n")
 	arg( '-s','--cv_scoring', default='roc_auc', type=str, help="the scoring function for model selection\n")
 	arg( '-j','--fs_grid', type=str, help="the parameter grid for feature selection\n")
 
-	arg( '-re','--refine', default='rf', type=str, choices=['rf','svm'], \
-	    help='after selecting features with random forest, you can try also svm on reduced sets (not implemented)')
 	## random forest options
 	arg( '-c','--rf_criterion', type=str, choices=['gini', 'entropy'], default='entropy', \
 	    help='Impurity criterion (random forest)')
@@ -129,6 +137,7 @@ def read_params():
 	    , choices=['0.001', '0.01', '0.1', '0.2', '0.3', '0.5', '0.4', '0.6', '1.0'\
 	    , '100', 'auto', 'sqrt', '0.33', None, 'log2','10'], default=0.3, \
 	    help='Feature sample/percentage (random forest)')
+
 	arg( '-nt','--number_of_trees', type=int, default=1000, help='# of estimator trees (random forest)')
 	arg( '-nsl','--number_sample_per_leaf', type=int, default=1, help='minimum # sample per leaf (random forest)')
 	arg( '-oob','--oob_score', action='store_true', help='Enable out-of-bag choice in random forest')
@@ -168,6 +177,8 @@ def save_average_feature_importance(fi, feat):
 	return fi_ave
 
 
+
+
 def save_results(l, l_es, p_es, i_tr, i_u, nf, runs_n, runs_cv_folds):
 
 	n_clts = len(np.unique(l.values.flatten().astype('int')))
@@ -182,6 +193,9 @@ def save_results(l, l_es, p_es, i_tr, i_u, nf, runs_n, runs_cv_folds):
 		l_ = pd.DataFrame([l.loc[i] for i in l[~i_tr[j] & i_u[j//runs_cv_folds]].index]).values.flatten().astype('int')
 
 		l_es_ = l_es[j].values.flatten().astype('int')
+		#print(p_es[j].sum())
+		#print(j, p_es[j].shape, "J e p_es J")
+
 		if (lp.learner_type == 'rf') | (lp.learner_type.endswith('svm')) | (lp.learner_type=='gb'):
 			p_es_pos_ = p_es[j].loc[:,1].values
 		else:
@@ -258,6 +272,7 @@ def save_results(l, l_es, p_es, i_tr, i_u, nf, runs_n, runs_cv_folds):
 
 
 
+
 def set_class_params(args, l):
 	lp = class_params()
 
@@ -268,7 +283,6 @@ def set_class_params(args, l):
 	else:
 		lp.learner_type = 'rf'
 
-	lp.refine = par['refine']
 	lp.refine_grid = [{'C': [1,1000], 'kernel':['linear']}, {'C': [1, 1000], 'gamma': [10, 1, 0.1, 0.01, 0.001, 0.0001], 'kernel':['rbf']}]
 
 	if par ['feature_selection']:
@@ -316,6 +330,7 @@ def set_class_params(args, l):
 	return lp
 
 
+
 if __name__ == "__main__":
 
 	par = read_params()
@@ -323,8 +338,17 @@ if __name__ == "__main__":
 	if par['rf_max_features'] in ['0.001', '0.01', '0.1', '0.2', '0.3', '0.4', '0.5', '0.6', '0.33','100','10','1.0']:
 		par['rf_max_features'] = float(par['rf_max_features'])
 
-	f = pd.read_csv(par['inp_f'], sep='\t', header=None, index_col=0 ) #, dtype=unicode)
+	f = pd.read_csv(par['inp_f'], sep='\t', header=None, index_col=0) #, dtype=unicode)
 	f = f.T
+
+	if par['reinforcement']:
+		t = pd.DataFrame([s.split(':') for s in par['reinforcement'].split(',')]).fillna(np.nan)
+		f_re = f.copy()
+
+		for i in range(len(t)): 
+			f = f[~f[ t.iloc[i,0] ].isin( t.iloc[i,1:]) ]
+
+		f_re = f_re[ ~f_re.index.isin(f.index) ]
 
 	if par['out_f']:
 		fidout = open(par['out_f'] + '.txt','w')
@@ -342,12 +366,18 @@ if __name__ == "__main__":
 
 		if par['objective_vector']: 
 			d_ob = pd.DataFrame([s.split(':') for s in par['objective_vector'].split(',')])
-			l_ob =  pd.DataFrame([0]*len(f))
+			l_ob = pd.DataFrame([0]*len(f))
 
 		for i in range(len(d)):
 			l[(f[d.iloc[i,1]].isin(d.iloc[i,2:])).tolist()] = d.iloc[i,0]
 			if par['objective_vector']:
 				l_ob[(f[d_ob.iloc[i,1]].isin(d_ob.iloc[i,2:])).tolist()] = d_ob.iloc[i,0]
+
+		if par['reinforcement']:
+			l_re = pd.DataFrame([0]*len(f_re))
+			for i in range(len(d)):
+			      ##l   [(f   [d.iloc[i,1]].isin(d.iloc[i,2:])).tolist()] = d.iloc[i,0] 
+				l_re[(f_re[d.iloc[i,1]].isin(d.iloc[i,2:])).tolist()] = d.iloc[i,0]
 
 	else:
 		le = prep.LabelEncoder()
@@ -363,6 +393,7 @@ if __name__ == "__main__":
 		runs_cv_folds = par['runs_cv_folds']
 
 	i_tr = pd.DataFrame(True, index=range(len(f.index)), columns=range(runs_n*runs_cv_folds))
+
 	if par['objective_vector']:
 		i_tr_ob = pd.DataFrame(True, index=range(len(f.index)), columns=range(runs_n*runs_cv_folds))
 
@@ -375,34 +406,105 @@ if __name__ == "__main__":
 		else:
 			i_u = pd.DataFrame(True, index=range(len(f.index)), columns=range(runs_n))
 
+	if par['reinforcement']:
+		i_tr_re = pd.DataFrame(True, index=range(len(f_re.index)), columns=range(runs_n*runs_cv_folds))
+
+		if par['target']:
+			i_u_re = pd.DataFrame(True, index=range(len(f_re.index)), columns=range(runs_n))
+
+		if par['unique']:
+			i_u_re = pd.DataFrame(False, index=range(len(f_re.index)), columns=range(runs_n))
+			meta_u = [s for s in f_re.columns if s in pf.iloc[0,0:].tolist()]
+		else:
+			i_u_re = pd.DataFrame(True, index=range(len(f_re.index)), columns=range(runs_n))
+
 	for j in range(runs_n):
 		if par['set_seed']:
 			np.random.seed(j)
+
 		if par['target']:
 			t = pd.DataFrame([s.split(':') for s in par['target'].split(',')])
 			for i in range(len(t)):
 				i_tr[j][(f[t.iloc[i,0]].isin(t.iloc[i,1:])).tolist()] = False
+
 				if par['objective_vector']:
 					i_tr_ob[j][(f[t.iloc[i,0]].isin(t.iloc[i,1:])).tolist()] = False
 
 		else:
+
 			if par['unique']:
 				ii_u = [s-1 for s in (f.loc[np.random.permutation(f.index),:].drop_duplicates(meta_u)).index]
 				i_u[j][ii_u] = True
 			else:
 				ii_u = range(len(f.index))
 
-
-			skf = StratifiedKFold(n_splits = runs_cv_folds, shuffle = True, random_state = (j if par['set_seed'] else None))
-			allowed_values = np.array(l.iloc[i_u.values.T[j], 0].values, dtype=np.float64)
-
-			skf_split = skf.split(np.array([[0, 0] for q in range(len(allowed_values))], dtype=np.float64), allowed_values)
+			skf = StratifiedKFold(n_splits = runs_cv_folds, shuffle = True, random_state = (j if par['set_seed'] else None))	
+			lll = np.array(l.iloc[i_u.values.T[j], 0].values, dtype=np.float64)
+ 
+			skf_split = skf.split(np.array([[0, 0] for q in range(len(lll))], dtype=np.float64), lll)
 			test_folds = [tf[1] for tf in skf_split] # [train_index,test_index in skf_split]]
 
 			for i in range(runs_cv_folds):
 				for s in test_folds[i]:
-					i_tr[j*runs_cv_folds + i ][ii_u[ s ]] = False
+					i_tr[ j*runs_cv_folds + i ][ ii_u[ s ] ] = False ## False == TEST
 
+	if par['reinforcement']:
+
+		i_tr = pd.concat([ i_tr, i_tr_re ]).reset_index(drop=True)
+		i_u = pd.concat([ i_u, i_u_re ]).reset_index(drop=True)
+
+		f = pd.concat([f, f_re]).reset_index(drop=True).fillna(0.0)
+		l = pd.concat([ l, l_re ]).reset_index(drop=True)
+		
+		#else:	## agumentation
+		#	t = pd.DataFrame([s.split(':') for s in par['augmentation'].split(',')])
+		#	
+		#
+		#	#for i in range(len(t)):
+                #        #        i_tr_ag[j][(f[t.iloc[i,0]].isin(t.iloc[i,1:])).tolist()] = False
+		#	#	i_tr_cr[j][(f[t.iloc[i,0]].isin(t.iloc[i,1:])).tolist()] = False
+		#
+		#
+		#	skf = StratifiedKFold(n_splits = runs_cv_folds, shuffle = True, random_state = (j if par[ 'set_seed' ] else None))
+		#
+		#	a_v = np.array(l.iloc[i_u.values.T[j], 0].values, dtype=np.float64)
+		#
+		#		#for i in range(len(t)):
+		#		#	a_v = a_v[ f[t.iloc[i,0]].isin(t.iloc[i,1:]).values.nonzero()[0] ]
+		#
+		#		# print(a_v, a_v.shape, " MINCHIE ")
+		#
+		#	skf_split = skf.split(np.array([[0, 0] for q in range(len(a_v))], dtype=np.float64), a_v)
+		#	  
+		#		#for tf in skf_split:
+		#		#	i = 0
+		#		#	print( f[t.iloc[i,0]].isin(t.iloc[i,1:]).values.shape, tf[1][ f[t.iloc[i,0]].isin(t.iloc[i,1:]).values.nonzero()[0] ].shape , "MINCHIA" )
+ 		#
+		#	t_fs = [ tf[1] for tf in skf_split ]
+		#	tt_fs = []
+  		#
+		#	for q,tf in enumerate(t_fs):
+		#		for i in range(len(t)):
+		#			tt_fs.append( tf[ f[t.iloc[i,0]].isin(t.iloc[i,1:]).values.nonzero()[0] ] )
+		#			for x in tt_fs:
+		#				print(len([xx for xx in x if xx<343]))
+ 		#
+		#				#print( len(tf), len(tf[ f[t.iloc[i,0]].isin(t.iloc[i,1:]).values.nonzero()[0] ]), len(t_fs[q]), " e almeno pou piccolo " )
+		#
+		#	exit(1)
+		#
+                #                           ### i_tr[j][(f[t.iloc[i,0]].isin(t.iloc[i,1:])).tolist()] = False
+		#			 
+		#	t_fs = tt_fs
+		#
+		#	for i in range(runs_cv_folds):
+		#		for s in t_fs[i]:
+		#			i_tr[j*runs_cv_folds + i ][ii_u[ s ]] = False
+		#
+		#
+		#	for e,k in enumerate(i_tr):
+		#		print(e, np.invert(i_tr[k]).sum(), i_tr[k].sum(), np.invert(i_tr[k]).sum() + i_tr[k].sum(), " TEST/TRAIN/TOT ")
+			
 	i_tr = i_tr.values.T
 	i_u = i_u.values.T
 
@@ -410,17 +512,34 @@ if __name__ == "__main__":
 		np.random.shuffle(l.values)
 
 	#for s in f.columns:
-		#print(par['feature_identifier'])
-		#print(par['feature_identifier'].split(":"))
-		#print(s, par['feature_identifier'].split(':'), [s2 in s for s2 in par['feature_identifier'].split(':')])
-        #print(par)
+		#print(par['feature_identifier'].split(':'), s)
+                #print(s, [s2 in s for s2 in par['feature_identifier'].split(':')])
+		#if sum([s2 in s for s2 in par['feature_identifier'].split(':')])>0:
+		#	try:
+		#	 	print(sum(f[s].astype(float)))
+		#	except:
+		#		print(f[s].unique().tolist())
 
-	feat = [s for s in f.columns if sum([s2 in s for s2 in par['feature_identifier'].split(':')])>0]
+	feat = [s for s in f.columns if ((sum([s2 in s for s2 in par['feature_identifier'].split(':')])>0) and (sum(f[s].astype(float))>0.))]
 	if 'unclassified' in f.columns: feat.append('unclassified')
 	f = f.loc[:, feat].astype('float')
+		 
+	#if par['augmentation']:
+	#	feat_ag = [s for s in f_ag.columns if ((sum([s2 in s for s2 in par['feature_identifier'].split(':')])>0) and (s in feat))]
+	#	f_ag = f_ag.loc[:, feat_ag].astype('float')
+	#	f_ag = f_ag.div(f_ag.sum(axis=1)) * 100.
 
-	if not par['no_norm']:
-		f = (f-f.min())/(f.max()-f.min())
+	#if not par['no_norm']:
+		#if not par['augmentation']:
+	f = (f-f.min())/(f.max()-f.min())
+		#else:
+		#	print(f.min(), "f min")
+		#	print(f_ag.min(), "f ag min")
+		#	print(f.max(), "f max")
+		#	print(f_ag.max(), "f ag max")
+
+		#	f = (  f  -  np.min([ f.min(), f_ag.min() ])  )/(  np.max([f.max(), f_ag.max()])  -  np.min([f.min(), f_ag.min()])  )
+		#	f_ag = (  f_ag  -  np.min([f.min(), f_ag.min()]) ) / (  np.max([f.max(), f_ag.max()])  -  np.min([f.min(), f_ag.min()])  )
 
 	lp = set_class_params(sys.argv, l)
 
@@ -435,20 +554,18 @@ if __name__ == "__main__":
 		start_run_time = time.time()
 		fi.append(feature_importance(feat, 1.0/len(feat)))
 
+		tr_st = f.loc[i_tr[j] & i_u[j//runs_cv_folds], fi[j].feat_sel].values
+		tr_st_t = l[i_tr[j] & i_u[j//runs_cv_folds]].values.flatten().astype('int')
+
 		if lp.feature_selection == 'lasso':
 			fi[j] = compute_feature_importance(LassoCV(\
-			alphas=lp.fs_grid[0], cv=lp.cv_folds, n_jobs=-1).fit(\
-			f.loc[i_tr[j] & i_u[j//runs_cv_folds], fi[j].feat_sel].values\
-			, l[i_tr[j] & i_u[j//runs_cv_folds]].values.flatten().astype('int'))\
-			, feat, fi[j].feat_sel, lp.feature_selection)
+			alphas=lp.fs_grid[0], cv=lp.cv_folds, n_jobs=par['ncores'], verbose=par['how_verbose']).fit(\
+			tr_st, tr_st_t), feat, fi[j].feat_sel, lp.feature_selection)
 
 		elif lp.feature_selection == 'enet':
 			fi[j] = compute_feature_importance(ElasticNetCV(\
-			alphas=lp.fs_grid[0], l1_ratio=lp.fs_grid[1], cv=lp.cv_folds, n_jobs=-1).fit(\
-			f.loc[i_tr[j] & i_u[j//runs_cv_folds], fi[j].feat_sel].values\
-			, l[i_tr[j] & i_u[j//runs_cv_folds]].values.flatten().astype('int'))\
-			, feat, fi[j].feat_sel, lp.feature_selection)			
- 
+			alphas=lp.fs_grid[0], l1_ratio=lp.fs_grid[1], cv=lp.cv_folds, n_jobs=par['ncores']).fit(\
+			tr_st, tr_st_t), feat, fi[j].feat_sel, lp.feature_selection)
 
 		if lp.learner_type == 'rf':
 			if not par['rf_max_features']:
@@ -463,25 +580,16 @@ if __name__ == "__main__":
 					, verbose=par['how_verbose'], oob_score=par['oob_score'])\
 					, lp.cv_grid, cv=StratifiedKFold(\
 					  l.iloc[i_tr[j] & i_u[j/runs_cv_folds],0], lp.cv_folds, shuffle=True)\
-					, scoring=lp.cv_scoring, refit=False).fit(\
-				f.loc[i_tr[j] & i_u[j//runs_cv_folds], fi[j].feat_sel].values\
-				, l[i_tr[j] & i_u[j//runs_cv_folds]].values.flatten().astype('int'))
+					, scoring=lp.cv_scoring, refit=False).fit( tr_st, tr_st_t )
 	
 				clf.append(RandomForestClassifier(\
 					n_estimators=par['number_of_trees'], criterion=par['rf_criterion']\
 					, max_features=hypers.best_params_['max_features']\
 					, oob_score=par['oob_score'], max_depth=None, min_samples_split=2\
 					, n_jobs=par['ncores'], verbose=par['how_verbose']\
-					, min_samples_leaf=par['number_sample_per_leaf']).fit(\
-				f.loc[i_tr[j] & i_u[j//runs_cv_folds], fi[j].feat_sel].values\
-				, l[i_tr[j] & i_u[j//runs_cv_folds]].values.flatten().astype('int')))	
+					, min_samples_leaf=par['number_sample_per_leaf']).fit( tr_st, tr_st_t ))
 
 			else:
-
-				#print(f.shape, " forma di f")
-				#print(i_tr.shape, " forma di i_tr")
-				#print(l.shape, " forma di l")
-
 				clf.append(RandomForestClassifier(\
 					n_estimators=par['number_of_trees']\
 					, criterion=par['rf_criterion']\
@@ -490,9 +598,7 @@ if __name__ == "__main__":
 					, min_samples_split=2, n_jobs=par['ncores']\
 					, verbose=par['how_verbose']\
 					, min_samples_leaf=par['number_sample_per_leaf']\
-					, class_weight='balanced').fit(\
-                                f.loc[i_tr[j] & i_u[j//runs_cv_folds], fi[j].feat_sel].values\
-                                , l[i_tr[j] & i_u[j//runs_cv_folds]].values.flatten().astype(int)))
+					, class_weight='balanced').fit( tr_st, tr_st_t ))
 
 		elif lp.learner_type == "gb":
                     clf.append(GradientBoostingClassifier(\
@@ -503,32 +609,22 @@ if __name__ == "__main__":
                                         , min_samples_split=2 \
                                         , verbose=par['how_verbose']\
                                         , min_samples_leaf=par['number_sample_per_leaf']\
-                                        ).fit(\
-                                f.loc[i_tr[j] & i_u[j//runs_cv_folds], fi[j].feat_sel].values\
-                                , l[i_tr[j] & i_u[j//runs_cv_folds]].values.flatten().astype(int)))
-
+                                        ).fit(  tr_st, tr_st_t ))
 
 		elif lp.learner_type.endswith('svm'):
 			clf.append(GridSearchCV(\
                                 SVC(probability=True, verbose=bool(par['how_verbose']))\
                                 , lp.cv_grid, cv=StratifiedKFold(l.iloc[i_tr[j] & i_u[j/runs_cv_folds],0]\
 				, lp.cv_folds, shuffle=True)\
-                                , scoring=lp.cv_scoring)\
-                        .fit(f.loc[i_tr[j] & i_u[j//runs_cv_folds], fi[j].feat_sel].values\
-			, l[i_tr[j] & i_u[j//runs_cv_folds]].values.flatten().astype('int')))
+                                , scoring=lp.cv_scoring).fit( tr_st, tr_st_t ))
 
 		elif lp.learner_type == 'lasso':
-			clf.append(LassoCV(alphas=lp.cv_grid[0], cv=lp.cv_folds, n_jobs=-1).fit(\
-				f.loc[i_tr[j] & i_u[j//runs_cv_folds], fi[j].feat_sel].values\
-				, l[i_tr[j] & i_u[j//runs_cv_folds]].values.flatten().astype('int')))
+			clf.append(LassoCV(alphas=lp.cv_grid[0], cv=lp.cv_folds, n_jobs=par['ncores'], verbose=par['how_verbose']).fit(\
+				tr_st, tr_st_t ))
 
 		elif lp.learner_type == 'enet':
 			clf.append(ElasticNetCV(\
-			alphas=lp.cv_grid[0], l1_ratio=lp.cv_grid[1], cv=lp.cv_folds, n_jobs=-1).fit(\
-			f.loc[i_tr[j] & i_u[j//runs_cv_folds], fi[j].feat_sel].values\
-			, l[i_tr[j] & i_u[j//runs_cv_folds]].values.flatten().astype('int')))
-
-
+			alphas=lp.cv_grid[0], l1_ratio=lp.cv_grid[1], cv=lp.cv_folds, n_jobs=-1).fit( tr_st, tr_st_t ))
  
 		if (lp.learner_type == 'rf') | (lp.learner_type.endswith('svm')) | (lp.learner_type=='gb'):
 			p_es.append(pd.DataFrame(clf[j].predict_proba(f.loc[~i_tr[j] & i_u[j//runs_cv_folds], fi[j].feat_sel].values)))
@@ -545,6 +641,10 @@ if __name__ == "__main__":
 		elapsed_run_time = time.time() - start_run_time
 		if par['how_verbose'] > 0:
 			print('%i run-time: %.4f sec.' %(j, float(elapsed_run_time)))
+
+	#print(p_es[-1], "questa e p_es")	
+	#print(l_es[-1], "questa e l_es")
+	#print(l, " questa e l")
 	
 	cm = save_results(l if not par['objective_vector'] else l_ob, \
 		l_es, p_es, i_tr if not par['objective_vector'] else i_tr_ob, \
@@ -554,13 +654,11 @@ if __name__ == "__main__":
 	if par['how_verbose'] > 0:
 		print ('global-time: %.4f sec.' %(global_elapsed))
 
-
 	## from here on, if you used ranfom forest and you didn't specify
 	## disable_features (which is useful in case of huge of very large database)
 	## you have extracted a ranking of the most predictive features which
-	## is averaged over '# folds * # runs' cicles. The testing sets are at
-	## each cycle excluded, so you can use this set of selected features
-	## without worrying
+	## is averaged over '# folds * # runs' cicles. The testing sets are at each 
+        ## cycle excluded, so you can use this set of selected features without worrying
 	if lp.learner_type in ['rf', 'gb']:
 		if not par['disable_features']:
 			fi_f = []
@@ -582,28 +680,27 @@ if __name__ == "__main__":
 					p_es_f = []
 					l_es_f = []
 
-					if lp.refine == 'rf':	
-						for j in range(runs_n*runs_cv_folds):
-							clf_f.append(\
-								RandomForestClassifier(n_estimators=par['number_of_trees']
-								, criterion=par['rf_criterion']\
-								, max_features=(k if par['feature_identifier'] != 'UniRef90' else (k if k<=128 else 0.3))\
-								, max_depth=None\
-								, min_samples_split=2, oob_score=par['oob_score']\
-								, min_samples_leaf=par['number_sample_per_leaf']\
-								, n_jobs=par['ncores'], verbose=par['how_verbose']\
-								, class_weight='balanced')\
-							    .fit(f.loc[i_tr[j] & i_u[j//runs_cv_folds], fi_f[j].feat_sel[:k] ].values\
-							, l[i_tr[j] & i_u[j//runs_cv_folds]].values.flatten().astype('int')))
+					for j in range(runs_n*runs_cv_folds):
+						clf_f.append(\
+							RandomForestClassifier(n_estimators=par['number_of_trees']
+							, criterion=par['rf_criterion']\
+							, max_features=(k if par['feature_identifier'] != 'UniRef90' else (k if k<=128 else 0.3))\
+							, max_depth=None\
+							, min_samples_split=2, oob_score=par['oob_score']\
+							, min_samples_leaf=par['number_sample_per_leaf']\
+							, n_jobs=par['ncores'], verbose=par['how_verbose']\
+							, class_weight='balanced')\
+							.fit(f.loc[i_tr[j] & i_u[j//runs_cv_folds], fi_f[j].feat_sel[:k] ].values\
+						, l[i_tr[j] & i_u[j//runs_cv_folds]].values.flatten().astype('int')))
 
-							p_es_f.append(pd.DataFrame(clf_f[j].predict_proba(f.loc[~i_tr[j] & i_u[j//runs_cv_folds]\
-								, fi_f[j].feat_sel[:k]].values)))
-							l_es_f.append(pd.DataFrame([list(p_es_f[j].iloc[i,:]).index(max(p_es_f[j].iloc[i,:])) \
-							for i in range(len(p_es_f[j]))]))
+						p_es_f.append(pd.DataFrame(clf_f[j].predict_proba(f.loc[~i_tr[j] & i_u[j//runs_cv_folds]\
+							, fi_f[j].feat_sel[:k]].values)))
+						l_es_f.append(pd.DataFrame([list(p_es_f[j].iloc[i,:]).index(max(p_es_f[j].iloc[i,:])) \
+						for i in range(len(p_es_f[j]))]))
 
-						cm_f = save_results(l if not par['objective_vector'] else l_ob, \
-							l_es_f, p_es_f, i_tr if not par['objective_vector'] else i_tr_ob, \
-							i_u, k, runs_n, runs_cv_folds)
+					cm_f = save_results(l if not par['objective_vector'] else l_ob, \
+						l_es_f, p_es_f, i_tr if not par['objective_vector'] else i_tr_ob, \
+						i_u, k, runs_n, runs_cv_folds)
 
 			elif lp.learner_type == 'gb':
 				for k in steps:
@@ -634,19 +731,6 @@ if __name__ == "__main__":
                                                         l_es_f, p_es_f, i_tr if not par['objective_vector'] else i_tr_ob, \
                                                         i_u, k, runs_n, runs_cv_folds)
                         
-					#elif lp.refine == 'svm':				
-					#	for j in range(runs_n*runs_cv_folds):
-					#		clf_f.append(GridSearchCV(\
-					#			SVC(probability=True, verbose=1), lp.refine_grid, cv=StratifiedKFold(\
-                                	#		l.iloc[i_tr[j] & i_u[j//runs_cv_folds],0], lp.cv_folds, shuffle=True)\
-                                	#			, scoring=lp.cv_scoring, refit=True).fit(f.loc[i_tr[j] & i_u[j//runs_cv_folds]\
-					#			, fi_f[j].feat_sel[:k]].values, l[i_tr[j] & i_u[j//runs_cv_folds]].values.flatten().astype('int')))
-					#		p_es_f.append(pd.DataFrame(clf_f[j].predict_proba(f.loc[~i_tr[j] & i_u[j//runs_cv_folds]\
-					#		, fi_f[j].feat_sel[:k]].values)))
-					#		l_es_f.append(pd.DataFrame([list(p_es_f[j].iloc[i,:]).index(max(p_es_f[j].iloc[i,:])) \
-					#		for i in range(len(p_es_f[j]))]))
-					#	cm_f = save_results(l, l_es_f, p_es_f, i_tr, i_u, k, runs_n, runs_cv_folds)
- 
 			fi_ave = save_average_feature_importance(fi_f, feat)
  
 	if par['out_f']:
